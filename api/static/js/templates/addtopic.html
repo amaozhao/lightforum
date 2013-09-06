@@ -1,0 +1,30 @@
+<% if (is_authenticated) { %>
+	<div class="media addtopic">
+	  	<a class="pull-left" href="#">
+	    	<img src="<%= avatar %>" class="media-object img-circle" style="width: 50px; height: 50px;">
+	  	</a>
+	  	<div class="media-body">
+	    	<div class="panel panel-success">
+	    		<div class="panel-heading topic-title hide">
+		    		<div class="panel-title">
+	    				<div class="title">
+							<div class="form-group">
+								<input type="text" class="form-control title-input" placeholder="<%_ Topic Title %>">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="topic-placeholder"><%_ Add a new topic. %></div>
+					<div class="topic-add hide">
+						<div class="form-group">
+							<textarea id="new-topic"></textarea>
+						</div>
+						<button class="btn btn-primary btn-sm add-topic-save" type="button"><%_ Save %></button>
+						<button class="btn btn-danger btn-sm add-topic-cancel" type="button"><%_ Cancel %></button>
+					</div>
+				</div>
+			</div>
+	  	</div>
+	</div>
+<% } %>

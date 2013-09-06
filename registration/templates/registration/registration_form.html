@@ -1,0 +1,33 @@
+{% load i18n %}
+<div class="form-group {% if form.username.errors %}has-error{% endif %}">
+	<label class="control-label" for="inputError">
+		{% for error in form.username.errors %}
+			{{error}}
+		{% endfor %}
+	</label>
+  	<input type="text" autofocus="" placeholder="{% trans 'Username' %}" class="form-control" name="username">
+</div>
+<div class="form-group {% if form.email.errors %}has-error{% endif %}">
+	<label class="control-label" for="inputError">
+		{% for error in form.email.errors %}
+			{{error}}
+		{% endfor %}
+	</label>
+  	<input type="email" placeholder="{% trans 'Email' %}" class="form-control" name="email">
+</div>
+<div class="form-group {% if form.password1.errors %}has-error{% endif %}">
+	<label class="control-label" for="inputError">
+		{% for error in form.password1.errors %}
+			{{error}}
+		{% endfor %}
+	</label>
+  	<input type="password" placeholder="{% trans 'Password(More then 6 charatetor)' %}" class="form-control" name="password1">
+</div>
+<div class="form-group {% if form.password2.errors %}has-error{% endif %}">
+	<label class="control-label" for="inputError">
+		{% for error in form.password2.errors %}
+			{{error}}
+		{% endfor %}
+	</label>
+  	<input type="password" placeholder="{% trans 'Password Repeat' %}" class="form-control" name="password2">
+</div>

@@ -1,0 +1,57 @@
+<div class="media comment">
+	<a href="#" class="pull-left comment-user-img" data-placement="auto top" data-html="true" data-toggle="popover" title="<%= author %>" data-content="
+
+		<div class='panel panel-default' style='width: 140px;'>
+			<div class='panel-body' style='padding: 4px;'>
+				<div class='media'>
+			    	<img class='pull-left media-object' src='<%= avatar %>' alt='<%= author %>' style='width: 24px; height: 24px;'>
+				  	<div class='media-body'>
+			    		<h5 style='margin-top:0;'><%_ following %><span class='badge pull-right'><%= author_followings %></span></h5>
+			    		<h5><%_ fans %><span class='badge pull-right'><%= author_fans %></span></h5>
+				  	</div>
+				</div>
+			</div>
+			<% if (can_following) { %>
+				<div class='panel-footer'>
+					<button class='btn btn-small btn-primary btn-xs comment-friend'>
+		    			<% if (following) { %>
+		    				<%_ cancel follow %>
+		    			<% } else { %>
+		    				<%_ follow %>
+						<% } %>
+		    		</button>
+				</div>
+			<% } %>
+		</div>
+
+		" data-original-title="<%= author %>">
+		<img real="popover" src="<%= avatar %>" class="media-object img-circle" style="width: 40px; height: 40px;">
+	</a>
+	<div class="media-body">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="panel-title">
+					<div class="title" style="font-size: 14px;">
+						<a href="#"><%= author %></a> <%_ commented on %> <%= created %> <%_ ago %>
+						<% if (editable) { %>
+							<button class="btn btn-default btn-xs pull-right edit-comment hide" type="button">
+								<span class="glyphicon glyphicon-cog"><%_ Edit %></span>
+							</button>
+						<% } %>
+					</div>
+				</div>
+
+			</div>
+			<div class="panel-body">
+				<div class="comment-content"><%= markdown %></div>
+				<% if (editable) { %>
+					<div class="comment-edit hide">
+						<textarea id="comment-editor-<%= id %>"></textarea>
+						<button class="btn btn-primary btn-sm save" type="button"><%_ Save %></button>
+						<button class="btn btn-danger btn-sm cancel" type="button"><%_ Cancel %></button>
+					</div>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</div>

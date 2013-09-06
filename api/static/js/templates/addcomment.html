@@ -1,0 +1,19 @@
+<% if (commentable) { %>
+	<div class="media addcomment">
+	  	<a class="pull-left" href="#">
+	    	<img src="<%= addcommentavatar %>" title="<%= author %>" class="media-object img-circle" style="width: 40px; height: 40px; margin-top: 5px;">
+	  	</a>
+	  	<div class="media-body">
+	    	<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="comment-placeholder"><%_ Add a new comment %>.</div>
+					<div class="comment-add hide">
+						<textarea id="new-comment"></textarea>
+						<button class="btn btn-primary btn-sm add-comment-save" type="button"><%_ Save %></button>
+						<button class="btn btn-danger btn-sm add-comment-cancel" type="button"><%_ Cancel %></button>
+					</div>
+				</div>
+			</div>
+	  	</div>
+	</div>
+<% } %>

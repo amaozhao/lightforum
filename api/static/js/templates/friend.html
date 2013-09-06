@@ -1,0 +1,27 @@
+<div class="col-lg-2" style="text-align: center;">
+  	<a href="#" class="user-img" data-placement="auto top" data-html="true" data-toggle="popover" title="<%= username %>" data-content="
+
+		<div class='media' style='width: 140px;'>
+		  	<a class='pull-left' href='#'>
+		    	<img class='media-object' src='<%= avatar %>' alt='<%= username %>' style='width: 24px; height: 24px;'>
+		  	</a>
+		  	<div class='media-body'>
+	    		<h5 style='margin-top: 0;'><%_ following %><span class='badge pull-right'><%= following %></span></h5>
+	    		<h5><%_ fans %><span class='badge pull-right'><%= fans %></span></h5>
+		  	</div>
+		</div>
+
+		" data-original-title="<%= username %>">
+  		<img src="<%= avatar %>" style="width: 48px; height: 48px;" class="img-circle">
+  	</a>
+  	<h5><a href="#"><%= username %></a></h5>
+  	<% if (is_following) { %>
+  		<p>
+  			<a class="btn btn-danger btn-sm" href="#"><%_ cancel follow %></a>
+  		</p>
+  		<% } else { %>
+  		<p>
+  			<a class="btn btn-primary btn-sm" href="#"><%_ follow %></a>
+  		</p>
+	<% } %>
+</div>

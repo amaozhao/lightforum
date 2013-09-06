@@ -1,0 +1,49 @@
+<ul class="nav navbar-nav">
+  <li class="home"><a href="#"><%_ Home %></a></li>
+  <li class="about"><a href="#"><%_ About %></a></li>
+  <li class="contact"><a href="#"><%_ Contact %></a></li>
+  <li class="navbar-form navbar-left">
+    <div class="form-group">
+      <input type="text" class="form-control input-sm nav-search" placeholder="<%_ Search %>">
+    </div>
+  </li>
+</ul>
+
+<% if (username) { %>
+  <ul class="nav navbar-nav navbar-right">
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <span class="glyphicon glyphicon-user"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="#" class="myfollowing text-center"><%_ My Following %></a></li>
+        <li><a href="#" class="myfans text-center"><%_ My Fans %></a></li>
+      </ul>
+    </li>
+    <li style="width:44px;">
+      <a href="#">
+        <!-- <span class="glyphicon glyphicon-bell"></span> -->
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAQNJREFUeNrsVcsNgzAMJVVP9MIGZYSMwCgZgREYgRE6AqMwAiPAob2mz8KtqNREDqRFamPpKSKx/eQvylqb7SGHbCdJxIn4KUopDQx0xiBW0nEC4RVHDtxgc/p4xCCsKVImJck58noTM0X8DpAC6IERaIGK7yv+Hvm9cPnwwUfcM7TjXT90ohFDGo5Ie41nctKrYxFTTVuRgzntQyixq7nOQCdsk471o3X1IPQxRptjjAqurQpYLkH6aVf/KTEaxeCYAv1MbLduV0MMj9ElaAtBn+2M1OZlnGgstqZQOlbHNUZfay5koqFsLNBkEVIjqWHJNbR8lmt+hc4apwXyk8R3AQYAusTyWc//zq8AAAAASUVORK5CYII=" style="width: 20px;margin-top: -4px;" />
+      </a>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <%= username %> <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="#" class="profile text-center"><%_ Profile %></a></li>
+        <li><a href="/accounts/logout/?next=/" class="signout text-center"><%_ Sign Out %></a></li>
+      </ul>
+    </li>
+  </ul>
+<% } else { %>
+  <ul class="nav navbar-nav navbar-right">
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%_ Sign In %> <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><a href="#" class="nav-signin text-center"><%_ Sign In %></a></li>
+        <li><a href="#" class="nav-signup text-center"><%_ Sign Up %></a></li>
+      </ul>
+    </li>
+  </ul>
+<% } %>

@@ -1,0 +1,51 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-09-06 16:48+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: models.py:7
+msgid "Male"
+msgstr "男"
+
+#: models.py:7
+msgid "Female"
+msgstr "女"
+
+#: models.py:10
+msgid "user"
+msgstr "用户"
+
+#: models.py:11
+msgid "gender"
+msgstr "性别"
+
+#: models.py:12
+msgid "QQ Number"
+msgstr "QQ号码"
+
+#: models.py:13
+msgid "WeiBo"
+msgstr "微博"
+
+#: models.py:18
+msgid "profile"
+msgstr "个人资料"
+
+#: models.py:19
+msgid "profiles"
+msgstr "个人资料"
