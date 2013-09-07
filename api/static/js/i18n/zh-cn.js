@@ -67,15 +67,22 @@ define([], function () {
 		    "Cancel":             "取消",
 
 		    //topiclist
-		    "Topic Title":          "话题标题",
-		    "Add a new topic.":     "添加新话题",
+		    "Topic Title":        "话题标题",
+		    "Add a new topic.":   "添加新话题",
 
 		    //profile
-		    "Edit Profile":         "编辑个人资料",
-		    "QQ Number":            "QQ号码",
-		    "WeiBo":                "微博",
-		    "Male":                "男",
-		    "Female":                "女",
+		    "Edit Profile":       "编辑个人资料",
+		    "QQ Number":          "QQ号码",
+		    "WeiBo":              "微博",
+		    "Male":               "男",
+		    "Female":             "女",
+
+		    //notifications
+		    "You have":                   "你有",
+		    "notifications unread":       "通知未读",
+		    "users replied comment for":  "人回复了",
+		    "replied comment for":        "人回复了",
+		    "Mark as Read":               "标记为已读",
         }
     }
 

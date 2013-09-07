@@ -32,8 +32,8 @@ define([
 		initialize: function (options) {
 			var zh = new zh_CN();
 		    var locale = underi18n.MessageFactory(zh);
-			this.usertemplate = _.template(underi18n.template(usersidebarTemplate, locale)),
-			this.aboutsidebartemplate = _.template(underi18n.template(aboutsidebarTemplate, locale)),
+			this.usertemplate = _.template(underi18n.template(usersidebarTemplate, locale));
+			this.aboutsidebartemplate = _.template(underi18n.template(aboutsidebarTemplate, locale));
 		
 			this.options = options;
 			if(options && options.topic){

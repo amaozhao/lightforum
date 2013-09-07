@@ -20,10 +20,9 @@
         <li><a href="#" class="myfans text-center"><%_ My Fans %></a></li>
       </ul>
     </li>
-    <li style="width:44px;">
-      <a href="#">
-        <!-- <span class="glyphicon glyphicon-bell"></span> -->
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAQNJREFUeNrsVcsNgzAMJVVP9MIGZYSMwCgZgREYgRE6AqMwAiPAob2mz8KtqNREDqRFamPpKSKx/eQvylqb7SGHbCdJxIn4KUopDQx0xiBW0nEC4RVHDtxgc/p4xCCsKVImJck58noTM0X8DpAC6IERaIGK7yv+Hvm9cPnwwUfcM7TjXT90ohFDGo5Ie41nctKrYxFTTVuRgzntQyixq7nOQCdsk471o3X1IPQxRptjjAqurQpYLkH6aVf/KTEaxeCYAv1MbLduV0MMj9ElaAtBn+2M1OZlnGgstqZQOlbHNUZfay5koqFsLNBkEVIjqWHJNbR8lmt+hc4apwXyk8R3AQYAusTyWc//zq8AAAAASUVORK5CYII=" style="width: 20px;margin-top: -4px;" />
+    <li class="notification-tooltip" data-toggle="tooltip" data-placement="bottom" title="<%_ You have %> <%= notifications %> <%_ notifications unread %>.">
+      <a href="#" <% if (notifications) { %>class="notification-popover"<% } %> data-placement="bottom" data-html="true" data-toggle="popover">
+        <span class="glyphicon glyphicon-bell"></span>
       </a>
     </li>
     <li class="dropdown">

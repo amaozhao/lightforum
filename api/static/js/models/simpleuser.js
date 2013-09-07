@@ -15,6 +15,7 @@ define([
 		    "email": "", 
 		    "avatar": "http://www.gravatar.com/avatar/", 
 		    "is_authenticated": false,
+		    "notifications": 0,
 		},
 	});
 

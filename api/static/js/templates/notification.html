@@ -1,0 +1,12 @@
+<div class="">
+<% if (member_count > 1) { %>
+	<% _.each(member, function(user, index) { %>
+		<% if (index < 2) { %>
+			<a class="alert-link" href="/user/<%= user.id %>"><%= user.username %></a> 
+		<% } %>
+	<% }); %> 
+	<%= member_count %> <%_ users replied comment for %> <a class="alert-link" href="/topic/<%= topic_id%>"><%= topic_title %></a>
+<% } else { %>
+	<% _.each(member, function(user) { %> <a class="alert-link" href="/user/<%= user.id %>"><%= user.username %></a> <% }); %>  <%_ replied comment for %> <a class="alert-link" href="/topic/<%= topic_id%>"><%= topic_title %></a>
+<% } %>
+</div>

@@ -74,6 +74,18 @@ footer {
   max-width: 742px;
 }
 
+.nav .popover {
+  max-width: 400px;
+}
+
+.nav .list-group {
+  margin-bottom: 0;
+}
+
+.notification {
+  width: 300px;
+}
+
 /*
  * Off Canvas
  * --------------------------------------------------

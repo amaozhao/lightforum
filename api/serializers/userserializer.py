@@ -16,6 +16,7 @@ from friends.models import FriendShip
 class SimpleUserSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField('get_avatar')
     is_authenticated = serializers.SerializerMethodField('get_is_authenticated')
+    notifications = serializers.SerializerMethodField('get_notifications')
     
     def get_avatar(self, obj):
         try:
@@ -27,13 +28,19 @@ class SimpleUserSerializer(serializers.ModelSerializer):
     def get_topiccount(self, obj):
         return obj.topics.count()
     
+    def get_notifications(self, obj):
+        try:
+            return obj.notifications.filter(unread = True).count()
+        except:
+            return 0
+    
     def get_is_authenticated(self, obj):
         return self.context['view'].request.user.is_authenticated()
    
     class Meta:
         model = User
         fields = ('id', 'username', 
-                  'avatar', 'is_authenticated',
+                  'avatar', 'is_authenticated', 'notifications',
         )
         read_only_fields = ('id', 'username', )
 

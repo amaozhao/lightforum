@@ -15,6 +15,10 @@ define([
 		    "content": "",
 		    "created": "",
 		    "updated": "",
+		    "author_followings": 0,
+		    "author_fans": 0,
+		    "following": false,
+		    "can_following": false,
 	  	},
 	});
 

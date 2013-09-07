@@ -29,7 +29,7 @@ define([
 		initialize: function (options) {
 			var zh = new zh_CN();
 		    var locale = underi18n.MessageFactory(zh);
-			this.template = _.template(underi18n.template(commentTemplate, locale)),
+			this.template = _.template(underi18n.template(commentTemplate, locale));
 		
 			this.options = options;
 			this.listenTo(this.model, 'change', this.render);

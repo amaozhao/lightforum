@@ -7,9 +7,10 @@ define([
 	'i18n/zh-cn',
 	'models/simpleuser',
 	'text!templates/navbar.html',
-	// 'i18n/zh-cn',
+	'collections/notification',
+	'views/notificationlist',
 	'jquery.bootstrap'
-], function ($, _, underi18n, Backbone, zh_CN, SimpleUserModel, navbarTemplate) {
+], function ($, _, underi18n, Backbone, zh_CN, SimpleUserModel, navbarTemplate, NotificationCollection, NotificationListView) {
 	'use strict';
 
 	var NavBarView = Backbone.View.extend({
@@ -28,6 +29,11 @@ define([
             "click .myfollowing": "myfollowing",
             "click .myfans": "myfans",
             "click .profile": "profile",
+            "mouseenter .notification-tooltip": "tooltip",
+			"mouseleave .notification-tooltip": "hidetooltip",
+			"click .notification-popover": "showpopover",
+			"click .popover .alert-link": "notification",
+			"click .popover .last .btn-xs": "setread",
 		},
 
 		initialize: function (options) {
@@ -41,6 +47,9 @@ define([
 				this.listenTo(this.model, 'add', this.render);
 				this.model.fetch();
 				options.router.user = this.model;
+
+				this.notificationcollection = new NotificationCollection();
+				this.notificationcollection.fetch();
 			}
 			_.bindAll(this, 'render', 'home', 'about', 'contact', 'search');
 		},
@@ -110,7 +119,58 @@ define([
 			e.stopImmediatePropagation();
             e.preventDefault();
             Backbone.history.navigate('profile', {trigger: true, replace: true});
-		}
+		},
+
+		notification: function(e) {
+			e.stopImmediatePropagation();
+            e.preventDefault();
+            var $target = $(e.target);
+            var href = $target.attr('href');
+            Backbone.history.navigate(href, {trigger: true, replace: true});
+		},
+
+		setread: function(e) {
+			e.stopImmediatePropagation();
+            e.preventDefault();
+            var self = this;
+            var csrfmiddlewaretoken = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+            	type: 'POST',
+				url: self.notificationcollection.url,
+				dataType: 'json',
+				data: {csrfmiddlewaretoken: csrfmiddlewaretoken },
+				}).done(function(data) {
+					self.notificationcollection.set(data);
+					self.model.set("notifications", 0);
+					self.render();
+				});
+		},
+
+
+		tooltip: function(e) {
+			e.stopImmediatePropagation();
+            e.preventDefault();
+            this.$el.find('.notification-tooltip').tooltip('show');
+		},
+
+		hidetooltip: function(e) {
+			e.stopImmediatePropagation();
+            e.preventDefault();
+            this.$el.find('.notification-tooltip').tooltip('hide');
+		},
+
+		showpopover: function(e) {
+			e.stopImmediatePropagation();
+            e.preventDefault();
+            var notificationlistview = new NotificationListView({collection: this.notificationcollection});
+            var content = notificationlistview.render().el.innerHTML + '';
+            this.$el.find('.notification-popover').attr('data-content', content);
+            if(this.$el.find('.popover').length) {
+            	this.$el.find('.notification-popover').popover("destroy");
+            } else {
+	            this.$el.find('.notification-popover').popover("show");
+            }
+		},
 
 	});
 

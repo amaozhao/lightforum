@@ -133,6 +133,7 @@ INSTALLED_APPS = (
     'api',
     'registration',
     'profiles',
+    'notify',
 )
 
 # AUTHENTICATION_BACKENDS = (

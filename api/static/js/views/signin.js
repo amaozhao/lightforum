@@ -27,7 +27,7 @@ define([
 		initialize: function (options) {
 			var zh = new zh_CN();
 		    var locale = underi18n.MessageFactory(zh);
-			this.template = _.template(underi18n.template(signinTemplate, locale)),
+			this.template = _.template(underi18n.template(signinTemplate, locale));
 		
         	_.bindAll(this, 'render', 'signin', 'keypresssignin');
 		},

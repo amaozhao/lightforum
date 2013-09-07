@@ -23,7 +23,7 @@ define([
 		initialize: function () {
 			var zh = new zh_CN();
 		    var locale = underi18n.MessageFactory(zh);
-			this.template = _.template(underi18n.template(nofoundTemplate, locale)),
+			this.template = _.template(underi18n.template(nofoundTemplate, locale));
 		
         	_.bindAll(this, 'render');
 		},

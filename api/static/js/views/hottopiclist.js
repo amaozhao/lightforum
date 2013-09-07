@@ -25,7 +25,7 @@ define([
 		initialize: function (options) {
 			var zh = new zh_CN();
 		    var locale = underi18n.MessageFactory(zh);
-			this.template = _.template(underi18n.template(sidebarhottopicsTemplate, locale)),
+			this.template = _.template(underi18n.template(sidebarhottopicsTemplate, locale));
 		
 			this.hottopics = new SimpleTopicCollection();
 			this.hottopics.url = '/api/topics/hot';
