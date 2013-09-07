@@ -33,8 +33,7 @@ define([
 			this.addtopictemplate = _.template(underi18n.template(addtopicTemplate, locale));
             this.options = options;
             if(options && options.user){
-                this.usermodel = new SimpleUserModel();
-                this.usermodel.fetch();
+                this.usermodel = options.user;
                 this.listenTo(this.usermodel, 'change', this.render);
             }
             this.collection.fetch();

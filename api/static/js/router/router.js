@@ -102,29 +102,19 @@ define([
 		},
 
 		sigin: function() {
-			if(this.user.get('is_authenticated')){
-				Backbone.history.navigate("", {trigger: true, replace: true});
-				return;
-			} else {
-				this.utils({active: ''});
-				$(".clearfix").html('');
-				$('#sidebar').html('');
-				this.mainview = new SigninView();
-			    $('.nosidebar').html(this.mainview.render().el);
-			}
+			this.utils({active: ''});
+			$(".clearfix").html('');
+			$('#sidebar').html('');
+			this.mainview = new SigninView();
+		    $('.nosidebar').html(this.mainview.render().el);
 		},
 
 		sigup: function() {
-			if(this.user.get('is_authenticated')){
-				this.navigate("", {trigger: true, replace: true});
-				return;
-			} else {
-				this.utils({active: ''});
-				$(".clearfix").html('');
-				$('#sidebar').html('');
-				this.mainview = new SignupView();
-			    $('.nosidebar').html(this.mainview.render().el);
-			}
+			this.utils({active: ''});
+			$(".clearfix").html('');
+			$('#sidebar').html('');
+			this.mainview = new SignupView();
+		    $('.nosidebar').html(this.mainview.render().el);
 		},
 
 		detail: function(id) {
@@ -193,9 +183,8 @@ define([
 		},
 
 		utils: function(options){
-			this.navbarview = new NavBarView({user: this.user, active: options.active});
+			this.navbarview = new NavBarView({user: this.user, active: options.active, router: this});
 			$('.navbar-collapse.collapse').html(this.navbarview.render().el);
-			$('.nav .active').removeClass('active');
 		}
 	});
 

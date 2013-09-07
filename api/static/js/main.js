@@ -103,9 +103,6 @@ require([
         return _sync(method, model, options);
     };
     
-	/*jshint nonew:false*/
-	// Initialize routing and start Backbone.history()
-	
 	var router = new Router();
 	Backbone.history.start({pushState: true});
 });

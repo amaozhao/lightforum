@@ -34,18 +34,21 @@ define([
 			this.options = options;
 			var zh = new zh_CN();
 			var locale = underi18n.MessageFactory(zh);
-			this.template = _.template(underi18n.template(navbarTemplate, locale)),
-			this.model = new SimpleUserModel();
-			this.model.set(options.user.attributes);
-			this.listenTo(this.model, 'change', this.render);
-			this.listenTo(this.model, 'add', this.render);
-			this.model.fetch();
+			this.template = _.template(underi18n.template(navbarTemplate, locale));
+			if(options && options.user){
+				this.model = options.user;
+				this.listenTo(this.model, 'change', this.render);
+				this.listenTo(this.model, 'add', this.render);
+				this.model.fetch();
+				options.router.user = this.model;
+			}
 			_.bindAll(this, 'render', 'home', 'about', 'contact', 'search');
 		},
 
 		render: function () {
 			this.$el.html('');
 			this.$el.html(this.template(this.model.toJSON()));
+			$('.nav .active').removeClass('active');
 			if(this.options && this.options.active){
 				this.$el.find('.nav .' + this.options.active).addClass('active');
 			}

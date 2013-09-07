@@ -91,7 +91,6 @@ define([
 		        	} else {
 		        		self.$el.find('.signup-placeholder').html(data);
 		        	}
-		        	// Backbone.history.navigate("", {trigger: true, replace: true});
 		        }).fail(function(jqXHR, textStatus){
 		        	console.log( "Request failed: " + textStatus );
 		        });
