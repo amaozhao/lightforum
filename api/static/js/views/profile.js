@@ -44,9 +44,10 @@ define([
 			e.stopImmediatePropagation();
             e.preventDefault();
 
-            var //gender = this.$el.find('select').val().trim(),
+            var gender = this.$el.find('select').val(),
             	qq = this.$el.find('input[name=qq]').val().trim(),
         		weibo = this.$el.find('input[name=weibo]').val().trim();
+        	this.model.save({ gender: gender, qq: qq, weibo: weibo });
 		},
 	});
 

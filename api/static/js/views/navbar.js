@@ -31,6 +31,7 @@ define([
 		},
 
 		initialize: function (options) {
+			this.options = options;
 			var zh = new zh_CN();
 			var locale = underi18n.MessageFactory(zh);
 			this.template = _.template(underi18n.template(navbarTemplate, locale)),
@@ -38,28 +39,29 @@ define([
 			this.model.set(options.user.attributes);
 			this.listenTo(this.model, 'change', this.render);
 			this.listenTo(this.model, 'add', this.render);
+			this.model.fetch();
 			_.bindAll(this, 'render', 'home', 'about', 'contact', 'search');
 		},
 
 		render: function () {
-			this.model.fetch();
 			this.$el.html('');
 			this.$el.html(this.template(this.model.toJSON()));
+			if(this.options && this.options.active){
+				this.$el.find('.nav .' + this.options.active).addClass('active');
+			}
 			return this;
 		},
 
 		signin: function(e){
 			e.stopImmediatePropagation();
             e.preventDefault();
-
-            Backbone.history.navigate("/signin", {trigger: true, replace: true});
+            Backbone.history.navigate("signin", {trigger: true, replace: true});
 		},
 
 		signup: function(e){
 			e.stopImmediatePropagation();
             e.preventDefault();
-
-            Backbone.history.navigate("/signup", {trigger: true, replace: true});
+            Backbone.history.navigate("signup", {trigger: true, replace: true});
 		},
 
 		home: function(e){

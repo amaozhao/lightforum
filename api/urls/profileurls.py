@@ -4,7 +4,7 @@ from api.views.profileviewset import ProfileViewset
 
 profile_detail = ProfileViewset.as_view({
     'get': 'retrieve',
-    'put': 'update',
+    'post': 'update',
 })
 
 urlpatterns = patterns('',

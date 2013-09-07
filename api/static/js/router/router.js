@@ -55,7 +55,6 @@ define([
 		
 		initialize: function () {
 		    this.user = new SimpleUserModel();
-		    this.user.fetch();
 			this.topiccollection = new TopicCollection();
 		    this.topic = new Topic();
 		},
@@ -194,14 +193,9 @@ define([
 		},
 
 		utils: function(options){
-			if(typeof(this.navbarview) === 'undefined') {
-				this.navbarview = new NavBarView({user: this.user});
-			}
-			$('.navbar-collapse.collapse').html('').prepend(this.navbarview.render().el);
+			this.navbarview = new NavBarView({user: this.user, active: options.active});
+			$('.navbar-collapse.collapse').html(this.navbarview.render().el);
 			$('.nav .active').removeClass('active');
-			if(options && options.active){
-				$('.nav .' + options.active).addClass('active');
-			}
 		}
 	});
 

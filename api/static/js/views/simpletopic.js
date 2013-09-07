@@ -49,7 +49,7 @@ define([
 		topicdetail: function(e) {
 			e.stopImmediatePropagation();
             e.preventDefault();
-            Backbone.history.navigate("/topic/"+this.model.id, {trigger: true, replace: true});
+            Backbone.history.navigate("topic/"+this.model.id, {trigger: true, replace: true});
 		},
 	});
 

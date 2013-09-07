@@ -104,7 +104,7 @@ define([
 		usertopic: function(e) {
 			e.stopImmediatePropagation();
             e.preventDefault();
-            Backbone.history.navigate("/user/"+this.model.get('author_id'), {trigger: true, replace: true});
+            Backbone.history.navigate("user/"+this.model.get('author_id'), {trigger: true, replace: true});
 		},
 
 		edit: function(e){

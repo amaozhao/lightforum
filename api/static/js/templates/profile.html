@@ -12,8 +12,8 @@
 				<label><%_ gender %></label>
 			  	<select class="form-control" name="gender">
 			  		<option value="">---------</option>
-		          	<option value="<%_ Male %>" selected><%_ Male %></option>
-		          	<option value="<%_ Female %>"><%_ Female %></option>
+		          	<option value="<%_ Male %>" <% if (gender=='男') { %>selected<% } %>><%_ Male %></option>
+		          	<option value="<%_ Female %>" <% if (gender=='女') { %>selected<% } %>><%_ Female %></option>
 		        </select>
 			</div>
 			<div class="form-group">

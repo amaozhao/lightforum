@@ -14,7 +14,7 @@ class ProfileViewset(viewsets.ModelViewSet):
         if self.object is None:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
         
-        return super(self, ProfileViewset).update(request, *args, **kwargs)
+        return super(ProfileViewset, self).update(request, *args, **kwargs)
     
     def get_object(self, queryset=None):
         try:
