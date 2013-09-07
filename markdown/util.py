@@ -38,6 +38,9 @@ INLINE_PLACEHOLDER_PREFIX = STX+"klzzwxh:"
 INLINE_PLACEHOLDER = INLINE_PLACEHOLDER_PREFIX + "%s" + ETX
 INLINE_PLACEHOLDER_RE = re.compile(INLINE_PLACEHOLDER % r'([0-9]{4})')
 AMP_SUBSTITUTE = STX+"amp"+ETX
+HTML_PLACEHOLDER = STX + "wzxhzdk:%s" + ETX
+HTML_PLACEHOLDER_RE = re.compile(HTML_PLACEHOLDER % r'([0-9]+)')
+
 
 """
 Constants you probably do not need to change
@@ -54,7 +57,7 @@ RTL_BIDI_RANGES = ( ('\u0590', '\u07FF'),
 # Extensions should use "markdown.util.etree" instead of "etree" (or do `from
 # markdown.util import etree`).  Do not import it by yourself.
 
-try: # Is the C implemenation of ElementTree available?
+try: # Is the C implementation of ElementTree available?
     import xml.etree.cElementTree as etree
     from xml.etree.ElementTree import Comment
     # Serializers (including ours) test with non-c Comment
@@ -132,5 +135,5 @@ class HtmlStash(object):
         self.rawHtmlBlocks = []
 
     def get_placeholder(self, key):
-        return "%swzxhzdk:%d%s" % (STX, key, ETX)
+        return HTML_PLACEHOLDER % key
 

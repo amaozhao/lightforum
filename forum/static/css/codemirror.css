@@ -2,8 +2,7 @@
 
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
-  font-family: monospace, serif;
-  font-size: 13px;
+  font-family: monospace;
   height: 300px;
 }
 .CodeMirror-scroll {
@@ -104,7 +103,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
    the editor. You probably shouldn't touch them. */
 
 .CodeMirror {
-  line-height: 1.428571429;
+  line-height: 1;
   position: relative;
   overflow: hidden;
   background: white;
@@ -119,6 +118,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   height: 100%;
   outline: none; /* Prevent dragging from highlighting the element */
   position: relative;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
 }
 .CodeMirror-sizer {
   position: relative;
@@ -157,6 +158,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .CodeMirror-gutter {
   white-space: normal;
   height: 100%;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
   padding-bottom: 30px;
   margin-bottom: -32px;
   display: inline-block;

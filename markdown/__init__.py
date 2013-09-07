@@ -133,9 +133,9 @@ class Markdown(object):
 
         self.references = {}
         self.htmlStash = util.HtmlStash()
-        self.set_output_format(kwargs.get('output_format', 'xhtml1'))
         self.registerExtensions(extensions=kwargs.get('extensions', []),
                                 configs=kwargs.get('extension_configs', {}))
+        self.set_output_format(kwargs.get('output_format', 'xhtml1'))
         self.reset()
 
     def build_parser(self):
@@ -193,7 +193,7 @@ class Markdown(object):
             module_name = '.'.join(['markdown.extensions', ext_name])
 
         # Try loading the extension first from one place, then another
-        try: # New style (markdown.extensons.<extension>)
+        try: # New style (markdown.extensions.<extension>)
             module = __import__(module_name, {}, {}, [module_name.rpartition('.')[0]])
         except ImportError:
             module_name_old_style = '_'.join(['mdx', ext_name])

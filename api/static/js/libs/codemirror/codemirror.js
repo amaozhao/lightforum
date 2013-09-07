@@ -304,15 +304,13 @@ window.CodeMirror = (function() {
   // Make sure the gutters options contains the element
   // "CodeMirror-linenumbers" when the lineNumbers option is true.
   function setGuttersForLineNumbers(options) {
-    var found = false;
-    for (var i = 0; i < options.gutters.length; ++i) {
-      if (options.gutters[i] == "CodeMirror-linenumbers") {
-        if (options.lineNumbers) found = true;
-        else options.gutters.splice(i--, 1);
-      }
+    var found = indexOf(options.gutters, "CodeMirror-linenumbers");
+    if (found == -1 && options.lineNumbers) {
+      options.gutters = options.gutters.concat(["CodeMirror-linenumbers"]);
+    } else if (found > -1 && !options.lineNumbers) {
+      options.gutters = options.gutters.slice(0);
+      options.gutters.splice(i, 1);
     }
-    if (!found && options.lineNumbers)
-      options.gutters.push("CodeMirror-linenumbers");
   }
 
   // SCROLLBARS
@@ -357,6 +355,7 @@ window.CodeMirror = (function() {
 
     if (mac_geLion && scrollbarWidth(d.measure) === 0)
       d.scrollbarV.style.minWidth = d.scrollbarH.style.minHeight = mac_geMountainLion ? "18px" : "12px";
+    return needsV;
   }
 
   function visibleLines(display, doc, viewPort) {
@@ -412,11 +411,13 @@ window.CodeMirror = (function() {
     var oldFrom = cm.display.showingFrom, oldTo = cm.display.showingTo, updated;
     var visible = visibleLines(cm.display, cm.doc, viewPort);
     for (;;) {
+      var hadVScroll = cm.display.scroller.scrollHeight > cm.display.scroller.clientHeight + 1;
       if (!updateDisplayInner(cm, changes, visible, forced)) break;
-      forced = false;
       updated = true;
+      changes = [];
       updateSelection(cm);
-      updateScrollbars(cm);
+      if (updateScrollbars(cm) != hadVScroll) continue;
+      forced = false;
 
       // Clip forced viewport to actual scrollable area
       if (viewPort)
@@ -425,7 +426,6 @@ window.CodeMirror = (function() {
       visible = visibleLines(cm.display, cm.doc, viewPort);
       if (visible.from >= cm.display.showingFrom && visible.to <= cm.display.showingTo)
         break;
-      changes = [];
     }
 
     if (updated) {
@@ -2543,6 +2543,7 @@ window.CodeMirror = (function() {
 
     var sel = doc.sel;
     sel.goalColumn = null;
+    if (bias == null) bias = posLess(head, sel.head) ? -1 : 1;
     // Skip over atomic spans.
     if (checkAtomic || !posEq(anchor, sel.anchor))
       anchor = skipAtomic(doc, anchor, bias, checkAtomic != "push");
@@ -3187,9 +3188,11 @@ window.CodeMirror = (function() {
     operation: function(f){return runInOp(this, f);},
 
     refresh: operation(null, function() {
+      var badHeight = this.display.cachedTextHeight == null;
       clearCaches(this);
       updateScrollPos(this, this.doc.scrollLeft, this.doc.scrollTop);
       regChange(this);
+      if (badHeight) estimateLineHeights(this);
     }),
 
     swapDoc: operation(null, function(doc) {
@@ -5488,7 +5491,12 @@ window.CodeMirror = (function() {
     spanAffectsWrapping = function(str, i) {
       return /\-[^ \-?]|\?[^ !\'\"\),.\-\/:;\?\]\}]/.test(str.slice(i - 1, i + 1));
     };
-  else if (webkit && !/Chrome\/(?:29|[3-9]\d|\d\d\d)\./.test(navigator.userAgent))
+  else if (webkit && /Chrome\/(?:29|[3-9]\d|\d\d\d)\./.test(navigator.userAgent))
+    spanAffectsWrapping = function(str, i) {
+      var code = str.charCodeAt(i - 1);
+      return code >= 8208 && code <= 8212;
+    };
+  else if (webkit)
     spanAffectsWrapping = function(str, i) {
       if (i > 1 && str.charCodeAt(i - 1) == 45) {
         if (/\w/.test(str.charAt(i - 2)) && /[^\-?\.]/.test(str.charAt(i))) return true;
