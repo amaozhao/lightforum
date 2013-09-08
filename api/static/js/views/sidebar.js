@@ -34,7 +34,6 @@ define([
 		    var locale = underi18n.MessageFactory(zh);
 			this.usertemplate = _.template(underi18n.template(usersidebarTemplate, locale));
 			this.aboutsidebartemplate = _.template(underi18n.template(aboutsidebarTemplate, locale));
-		
 			this.options = options;
 			if(options && options.topic){
 				this.model = new model();

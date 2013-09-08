@@ -21,7 +21,7 @@
       </ul>
     </li>
     <li class="notification-tooltip" data-toggle="tooltip" data-placement="bottom" title="<%_ You have %> <%= notifications %> <%_ notifications unread %>.">
-      <a href="#" <% if (notifications) { %>class="notification-popover"<% } %> data-placement="bottom" data-html="true" data-toggle="popover">
+      <a href="#" class=<% if (notifications) { %>"notification-popover"<% } else { %>"notification-none"<% } %> data-placement="bottom" data-html="true" data-toggle="popover">
         <span class="glyphicon glyphicon-bell"></span>
       </a>
     </li>

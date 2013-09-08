@@ -32,6 +32,7 @@ define([
             "mouseenter .notification-tooltip": "tooltip",
 			"mouseleave .notification-tooltip": "hidetooltip",
 			"click .notification-popover": "showpopover",
+			"click .notification-none": "noshowpopover",
 			"click .popover .alert-link": "notification",
 			"click .popover .last .btn-xs": "setread",
 		},
@@ -45,7 +46,9 @@ define([
 				this.model = options.user;
 				this.listenTo(this.model, 'change', this.render);
 				this.listenTo(this.model, 'add', this.render);
-				this.model.fetch();
+				if(!this.model.get('is_authenticated')) {
+					this.model.fetch();
+				}
 				options.router.user = this.model;
 
 				this.notificationcollection = new NotificationCollection();
@@ -170,6 +173,11 @@ define([
             } else {
 	            this.$el.find('.notification-popover').popover("show");
             }
+		},
+
+		noshowpopover: function(e) {
+			e.stopImmediatePropagation();
+            e.preventDefault();
 		},
 
 	});

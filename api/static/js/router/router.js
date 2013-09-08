@@ -64,7 +64,7 @@ define([
 		    this.utils({active: 'home'});
 		    this.topiccollection.url = '/api/topics/';
 			$(".clearfix").html('');
-		    this.mainview = new TopicListView({collection: this.topiccollection, user: this.user});
+		    this.mainview = new TopicListView({collection: this.topiccollection, user: this.user, router: this});
 		    $(".clearfix").html(this.mainview.render().el);
 		    var sidebarview = new SideBarView();
 			$('#sidebar').html(sidebarview.render().el);
