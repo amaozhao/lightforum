@@ -87,6 +87,7 @@ define([
 		            data: { username: username, email: email, password1: password1, password2: password2, csrfmiddlewaretoken: csrfmiddlewaretoken },
 		        }).done(function(data){
 		        	if(data === 'done'){
+		        		window.currentuser.set(data);
 		        		Backbone.history.navigate("", {trigger: true, replace: true});
 		        	} else {
 		        		self.$el.find('.signup-placeholder').html(data);

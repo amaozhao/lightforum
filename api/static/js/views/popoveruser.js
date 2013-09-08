@@ -19,8 +19,6 @@ define([
 		render: function () {
 			this.$el.html('');
 			this.$el.html(this.tpl(this.model.toJSON()));
-		    console.log(this.model.get('following'));
-
 		    return this;
 		},
 	});

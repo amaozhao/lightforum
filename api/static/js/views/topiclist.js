@@ -34,8 +34,7 @@ define([
             this.options = options;
             if(options && options.user){
                 this.usermodel = options.user;
-                this.listenTo(this.usermodel, 'change', this.render);
-                this.listenTo(this.usermodel, 'change', this.setuser);
+                this.listenTo(window.currentuser, 'change', this.render);
             }
             this.collection.fetch({reset: true});
             this.listenTo(this.collection, 'add', this.render);
@@ -53,12 +52,6 @@ define([
             $('#spin').spin('tiny', 'teal');
 		    return this;
 		},
-
-        setuser: function() {
-            if(this.options && this.options.router){
-                this.options.router.user = this.usermodel;
-            }
-        },
 
         addNew: function() {
             this.$el.prepend(this.addtopictemplate(this.usermodel.toJSON()));

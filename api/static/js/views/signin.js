@@ -28,7 +28,6 @@ define([
 			var zh = new zh_CN();
 		    var locale = underi18n.MessageFactory(zh);
 			this.template = _.template(underi18n.template(signinTemplate, locale));
-		
         	_.bindAll(this, 'render', 'signin', 'keypresssignin');
 		},
 
@@ -64,6 +63,7 @@ define([
 		        		self.$el.find('.form-group').addClass('has-error');
 		        		self.$el.find('.control-label').removeClass('hide');
 		        	} else {
+		        		window.currentuser.set(data);
 		        		Backbone.history.navigate('', {trigger: true, replace: true});
 		        	}
 		        });

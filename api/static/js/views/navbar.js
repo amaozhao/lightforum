@@ -42,19 +42,13 @@ define([
 			var zh = new zh_CN();
 			var locale = underi18n.MessageFactory(zh);
 			this.template = _.template(underi18n.template(navbarTemplate, locale));
-			if(options && options.user){
-				this.model = options.user;
+			this.fetchnotify = false;
+			if(window.currentuser){
+				this.notificationcollection = new NotificationCollection();
+				this.model = window.currentuser;
 				this.listenTo(this.model, 'change', this.render);
 				this.listenTo(this.model, 'add', this.render);
-				if(!this.model.get('is_authenticated')) {
-					this.model.fetch();
-				}
-				options.router.user = this.model;
-
-				this.notificationcollection = new NotificationCollection();
-				this.notificationcollection.fetch();
 			}
-			_.bindAll(this, 'render', 'home', 'about', 'contact', 'search');
 		},
 
 		render: function () {
@@ -153,6 +147,10 @@ define([
 		tooltip: function(e) {
 			e.stopImmediatePropagation();
             e.preventDefault();
+            if(!this.fetchnotify){
+            	this.notificationcollection.fetch();
+            	this.fetchnotify = true;
+            }
             this.$el.find('.notification-tooltip').tooltip('show');
 		},
 

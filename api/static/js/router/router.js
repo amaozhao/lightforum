@@ -54,7 +54,8 @@ define([
 		},
 		
 		initialize: function () {
-		    this.user = new SimpleUserModel();
+		    window.currentuser = new SimpleUserModel();
+		    window.currentuser.fetch();
 			this.topiccollection = new TopicCollection();
 		    this.topic = new Topic();
 		},
@@ -64,7 +65,7 @@ define([
 		    this.utils({active: 'home'});
 		    this.topiccollection.url = '/api/topics/';
 			$(".clearfix").html('');
-		    this.mainview = new TopicListView({collection: this.topiccollection, user: this.user, router: this});
+		    this.mainview = new TopicListView({collection: this.topiccollection, user: window.currentuser});
 		    $(".clearfix").html(this.mainview.render().el);
 		    var sidebarview = new SideBarView();
 			$('#sidebar').html(sidebarview.render().el);
@@ -183,7 +184,7 @@ define([
 		},
 
 		utils: function(options){
-			this.navbarview = new NavBarView({user: this.user, active: options.active, router: this});
+			this.navbarview = new NavBarView({active: options.active});
 			$('.navbar-collapse.collapse').html(this.navbarview.render().el);
 		}
 	});
