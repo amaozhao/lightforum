@@ -110,7 +110,14 @@ define([
             var title = this.$el.find('.addtopic .title-input').val().trim(),
                 content = this.$el.find('#new-topic').val();
             if(title && content){
-                var newtopic = this.collection.create({ title: title, content: content }, {wait: true});
+                var newtopic = this.collection.create({ title: title, content: content }, {
+                    wait: true,
+                    error: function(model, xhr, options){
+                        if(xhr.status == 403){
+                            Backbone.history.navigate("signin", {trigger: true, replace: true});
+                        }
+                    },
+                });
                 var view = new TopicView({ model: newtopic });
                 this.$el.find('.addtopic').next().prepend(view.render().el);
                 this.$el.find('.addtopic .topic-placeholder').removeClass('hide');

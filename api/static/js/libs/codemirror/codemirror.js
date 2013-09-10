@@ -355,7 +355,6 @@ window.CodeMirror = (function() {
 
     if (mac_geLion && scrollbarWidth(d.measure) === 0)
       d.scrollbarV.style.minWidth = d.scrollbarH.style.minHeight = mac_geMountainLion ? "18px" : "12px";
-    return needsV;
   }
 
   function visibleLines(display, doc, viewPort) {
@@ -411,12 +410,16 @@ window.CodeMirror = (function() {
     var oldFrom = cm.display.showingFrom, oldTo = cm.display.showingTo, updated;
     var visible = visibleLines(cm.display, cm.doc, viewPort);
     for (;;) {
-      var hadVScroll = cm.display.scroller.scrollHeight > cm.display.scroller.clientHeight + 1;
+      var oldWidth = cm.display.scroller.clientWidth;
       if (!updateDisplayInner(cm, changes, visible, forced)) break;
       updated = true;
       changes = [];
       updateSelection(cm);
-      if (updateScrollbars(cm) != hadVScroll) continue;
+      updateScrollbars(cm);
+      if (cm.options.lineWrapping && oldWidth != cm.display.scroller.clientWidth) {
+        forced = true;
+        continue;
+      }
       forced = false;
 
       // Clip forced viewport to actual scrollable area
@@ -663,10 +666,11 @@ window.CodeMirror = (function() {
   }
 
   function buildLineElement(cm, line, lineNo, dims, reuse) {
-    var lineElement = lineContent(cm, line);
+    var built = buildLineContent(cm, line), lineElement = built.pre;
     var markers = line.gutterMarkers, display = cm.display, wrap;
 
-    if (!cm.options.lineNumbers && !markers && !line.bgClass && !line.wrapClass && !line.widgets)
+    var bgClass = built.bgClass ? built.bgClass + " " + (line.bgClass || "") : line.bgClass;
+    if (!cm.options.lineNumbers && !markers && !bgClass && !line.wrapClass && !line.widgets)
       return lineElement;
 
     // Lines with gutter elements, widgets or a background class need
@@ -704,8 +708,8 @@ window.CodeMirror = (function() {
       wrap.appendChild(lineElement);
     }
     // Kludge to make sure the styled element lies behind the selection (by z-index)
-    if (line.bgClass)
-      wrap.insertBefore(elt("div", null, line.bgClass + " CodeMirror-linebackground"), wrap.firstChild);
+    if (bgClass)
+      wrap.insertBefore(elt("div", null, bgClass + " CodeMirror-linebackground"), wrap.firstChild);
     if (cm.options.lineNumbers || markers) {
       var gutterWrap = wrap.insertBefore(elt("div", null, null, "position: absolute; left: " +
                                              (cm.options.fixedGutter ? dims.fixedPos : -dims.gutterTotalWidth) + "px"),
@@ -1028,7 +1032,7 @@ window.CodeMirror = (function() {
       return crudelyMeasureLine(cm, line);
 
     var display = cm.display, measure = emptyArray(line.text.length);
-    var pre = lineContent(cm, line, measure, true);
+    var pre = buildLineContent(cm, line, measure, true).pre;
 
     // IE does not cache element positions of inline elements between
     // calls to getBoundingClientRect. This makes the loop below,
@@ -1132,7 +1136,7 @@ window.CodeMirror = (function() {
     if (cached || line.text.length >= cm.options.crudeMeasuringFrom)
       return measureChar(cm, line, line.text.length, cached && cached.measure, "right").right;
 
-    var pre = lineContent(cm, line, null, true);
+    var pre = buildLineContent(cm, line, null, true).pre;
     var end = pre.appendChild(zeroWidthElement(cm.display.measure));
     removeChildrenAndAdd(cm.display.measure, pre);
     return getRect(end).right - getRect(cm.display.lineDiv).left;
@@ -1909,6 +1913,7 @@ window.CodeMirror = (function() {
     // Recent Safari (~6.0.2) have a tendency to segfault when this happens, so we don't do it there.
     if (e.dataTransfer.setDragImage && !safari) {
       var img = elt("img", null, null, "position: fixed; left: 0; top: 0;");
+      img.src = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
       if (opera) {
         img.width = img.height = 1;
         cm.display.wrapper.appendChild(img);
@@ -4310,13 +4315,23 @@ window.CodeMirror = (function() {
   }
 
   var styleToClassCache = {};
-  function styleToClass(style) {
+  function interpretTokenStyle(style, builder) {
     if (!style) return null;
+    for (;;) {
+      var lineClass = style.match(/(?:^|\s)line-(background-)?(\S+)/);
+      if (!lineClass) break;
+      style = style.slice(0, lineClass.index) + style.slice(lineClass.index + lineClass[0].length);
+      var prop = lineClass[1] ? "bgClass" : "textClass";
+      if (builder[prop] == null)
+        builder[prop] = lineClass[2];
+      else if (!(new RegExp("(?:^|\s)" + lineClass[2] + "(?:$|\s)")).test(builder[prop]))
+        builder[prop] += " " + lineClass[2];
+    }
     return styleToClassCache[style] ||
       (styleToClassCache[style] = "cm-" + style.replace(/ +/g, " cm-"));
   }
 
-  function lineContent(cm, realLine, measure, copyWidgets) {
+  function buildLineContent(cm, realLine, measure, copyWidgets) {
     var merged, line = realLine, empty = true;
     while (merged = collapsedSpanAtStart(line))
       line = getLine(cm.doc, merged.find().from.line);
@@ -4324,7 +4339,6 @@ window.CodeMirror = (function() {
     var builder = {pre: elt("pre"), col: 0, pos: 0,
                    measure: null, measuredSomething: false, cm: cm,
                    copyWidgets: copyWidgets};
-    if (line.textClass) builder.pre.className = line.textClass;
 
     do {
       if (line.text) empty = false;
@@ -4361,8 +4375,11 @@ window.CodeMirror = (function() {
       }
     }
 
+    var textClass = builder.textClass ? builder.textClass + " " + (realLine.textClass || "") : realLine.textClass;
+    if (textClass) builder.pre.className = textClass;
+
     signal(cm, "renderLine", cm, realLine, builder.pre);
-    return builder.pre;
+    return builder;
   }
 
   var tokenSpecialChars = /[\t\u0000-\u0019\u00ad\u200b\u2028\u2029\uFEFF]/g;
@@ -4473,7 +4490,7 @@ window.CodeMirror = (function() {
     var spans = line.markedSpans, allText = line.text, at = 0;
     if (!spans) {
       for (var i = 1; i < styles.length; i+=2)
-        builder.addToken(builder, allText.slice(at, at = styles[i]), styleToClass(styles[i+1]));
+        builder.addToken(builder, allText.slice(at, at = styles[i]), interpretTokenStyle(styles[i+1], builder));
       return;
     }
 
@@ -4523,7 +4540,7 @@ window.CodeMirror = (function() {
           spanStartStyle = "";
         }
         text = allText.slice(at, at = styles[i++]);
-        style = styleToClass(styles[i++]);
+        style = interpretTokenStyle(styles[i++], builder);
       }
     }
   }

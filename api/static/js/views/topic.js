@@ -170,7 +170,14 @@ define([
             e.preventDefault();
             var content = this.$el.find('#new-comment').val();
             if(content){
-                this.commentlistview.collection.create({ content: content });
+                this.commentlistview.collection.create({ content: content }, {
+                    wait: true,
+                    error: function(model, xhr, options){
+                        if(xhr.status == 403){
+                            Backbone.history.navigate("signin", {trigger: true, replace: true});
+                        }
+                    },
+                });
 	            this.$el.find('.comment-placeholder').removeClass('hide');
 	            this.$el.find('.comment-add').addClass('hide');
 	            this.$el.find('.addcomment .CodeMirror').remove();
@@ -189,7 +196,14 @@ define([
             var title = this.$el.find('.title-input').val().trim(),
                 content = this.$el.find('#topic-editor-'+this.model.id).val();
             if(title && content){
-                this.model.save({ title: title, content: content });
+                this.model.save({ title: title, content: content }, {
+                    wait: true,
+                    error: function(model, xhr, options){
+                        if(xhr.status == 403){
+                            Backbone.history.navigate("signin", {trigger: true, replace: true});
+                        }
+                    },
+                });
             	this.$el.find('.CodeMirror').remove();
             	this.$el.find('.panel-footer').html('');
             }

@@ -5,13 +5,20 @@
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{csrf_token}}">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="amaozhao">
+    {%if request.user.is_authenticated %}
+    	<meta name="id" content="{{ request.user.id }}">
+    	<meta name="username" content="{{ request.user }}">
+    	<meta name="email" content="{{ request.user.email }}">
+    	<meta name="notifications" content="{{ notifications }}">
+    	<meta name="avatar" content="{{ avatar }}">
+    {% endif %}
 
     <!-- Note there is no responsive meta tag here -->
 
     <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.png">
 
-    <title>{% block title %}{% trans "Light Forum" %}{% endblock %}</title>
+    <title>{% block title %}{% trans "Backboner" %}{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
@@ -39,7 +46,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">{% trans "Light Forum" %}</a>
+          <a class="navbar-brand" href="/">{% trans "Backboner" %}</a>
         </div>
         <div class="navbar-collapse collapse">
         </div>
@@ -61,7 +68,7 @@
       </footer>
 
     </div>
-    <script data-main="{{STATIC_URL}}js/main-built" src="{{STATIC_URL}}js/libs/requirejs/require.js"></script>
+    <script data-main="{{STATIC_URL}}js/main" src="{{STATIC_URL}}js/libs/requirejs/require.js"></script>
   </body>
 </html>
 

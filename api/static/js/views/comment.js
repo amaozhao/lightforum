@@ -88,7 +88,14 @@ define([
             e.preventDefault();
             var content = this.$el.find('textarea').val();
             if(content){
-                this.model.save({ content: content });
+                this.model.save({ content: content }, {
+                    wait: true,
+                    error: function(model, xhr, options){
+                        if(xhr.status == 403){
+                            Backbone.history.navigate("signin", {trigger: true, replace: true});
+                        }
+                    },
+                });
             }
             this.$el.find('.CodeMirror').remove();
 		},

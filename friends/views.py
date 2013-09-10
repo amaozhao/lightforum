@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext_lazy as _
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import BaseUpdateView
-from django.http.response import HttpResponseForbidden, HttpResponse
+from django.http import HttpResponseForbidden, HttpResponse
 from django.contrib.auth.models import User
 
 from friends.models import FriendShip

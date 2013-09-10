@@ -55,7 +55,12 @@ define([
 		
 		initialize: function () {
 		    window.currentuser = new SimpleUserModel();
-		    window.currentuser.fetch();
+		    var id = $('meta[name="id"]').attr('content'),
+		    	username = $('meta[name="username"]').attr('content'),
+		    	email = $('meta[name="email"]').attr('content'),
+		    	notifications = $('meta[name="notifications"]').attr('content'),
+		    	avatar = $('meta[name="avatar"]').attr('content');
+		    window.currentuser.set({id: id, username: username, email: email, notifications: notifications, avatar: avatar});
 			this.topiccollection = new TopicCollection();
 		    this.topic = new Topic();
 		},
@@ -103,6 +108,10 @@ define([
 		},
 
 		sigin: function() {
+			if(window.currentuser.get('username')){
+				Backbone.history.navigate("", {trigger: true, replace: true});
+				return;
+			}
 			this.utils({active: ''});
 			$(".clearfix").html('');
 			$('#sidebar').html('');
@@ -111,6 +120,10 @@ define([
 		},
 
 		sigup: function() {
+			if(window.currentuser.get('username')){
+				Backbone.history.navigate("", {trigger: true, replace: true});
+				return;
+			}
 			this.utils({active: ''});
 			$(".clearfix").html('');
 			$('#sidebar').html('');
