@@ -59,8 +59,16 @@ define([
 		    	username = $('meta[name="username"]').attr('content'),
 		    	email = $('meta[name="email"]').attr('content'),
 		    	notifications = $('meta[name="notifications"]').attr('content'),
-		    	avatar = $('meta[name="avatar"]').attr('content');
-		    window.currentuser.set({id: id, username: username, email: email, notifications: notifications, avatar: avatar});
+		    	avatar = $('meta[name="avatar"]').attr('content'),
+		    	is_authenticated;
+		    if(id){
+		    	is_authenticated = true;
+		    }
+		    window.currentuser.set({
+		    	id: id, username: username, email: email, 
+		    	notifications: notifications, avatar: avatar,
+		    	is_authenticated: is_authenticated
+		    });
 			this.topiccollection = new TopicCollection();
 		    this.topic = new Topic();
 		},
@@ -70,7 +78,7 @@ define([
 		    this.utils({active: 'home'});
 		    this.topiccollection.url = '/api/topics/';
 			$(".clearfix").html('');
-		    this.mainview = new TopicListView({collection: this.topiccollection, user: window.currentuser});
+		    this.mainview = new TopicListView({collection: this.topiccollection, add: true});
 		    $(".clearfix").html(this.mainview.render().el);
 		    var sidebarview = new SideBarView();
 			$('#sidebar').html(sidebarview.render().el);

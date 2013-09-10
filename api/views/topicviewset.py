@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, Q
 
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
@@ -15,7 +15,7 @@ class TopicViewset(viewsets.ModelViewSet):
     def get_queryset(self):
         keyword = self.request.GET.get('keyword', None)
         if keyword:
-            return Topic.objects.filter(content__contains = keyword)
+            return Topic.objects.filter(Q(content__icontains = keyword) | Q(title__icontains = keyword))
         return Topic.objects.all()
     
     def retrieve(self, request, *args, **kwargs):

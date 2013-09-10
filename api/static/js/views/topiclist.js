@@ -32,10 +32,9 @@ define([
 		    var locale = underi18n.MessageFactory(zh);
 			this.addtopictemplate = _.template(underi18n.template(addtopicTemplate, locale));
             this.options = options;
-            if(options && options.user){
-                this.usermodel = options.user;
-                this.listenTo(window.currentuser, 'change', this.render);
-            }
+            this.usermodel = window.currentuser;
+            this.listenTo(window.currentuser, 'change', this.render);
+            this.listenTo(window.currentuser, 'add', this.render);
             this.collection.fetch({reset: true});
             this.listenTo(this.collection, 'add', this.render);
             this.listenTo(this.collection, 'reset', this.render);
@@ -44,8 +43,9 @@ define([
         render: function () {
             this.$el.html('');
             this.$el.html(this.addAll());
-            if(this.options && this.options.user){
-                this.$el.prepend(this.addtopictemplate(this.usermodel.toJSON()));
+            if(this.options && this.options.add){
+                console.log(window.currentuser)
+                this.$el.prepend(this.addtopictemplate(window.currentuser.toJSON()));
             }
             var self = this;
             $(window).scroll(function() { self.scroll(); });
