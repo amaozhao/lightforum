@@ -1,12 +1,3 @@
-import hashlib
-try:
-    from django.utils.encoding import force_bytes
-except ImportError:
-    force_bytes = str
-try:
-    from urllib.parse import urlencode
-except ImportError:
-    from urllib import urlencode
 from django.utils.text import Truncator
 from django.utils.timesince import timesince
 
@@ -75,15 +66,13 @@ class TopicSerializer(serializers.ModelSerializer):
         return obj.author == self.context['view'].request.user
     
     def get_avatar(self, obj):
-        path = "%s" % (hashlib.md5(force_bytes(obj.author.email)).hexdigest())
-        return 'http://www.gravatar.com/avatar/' + path
+        return obj.author.get_profile().get_avatar(size=50)
     
     def get_addcommentavatar(self, obj):
         try:
-            path = "%s" % (hashlib.md5(force_bytes(self.context['view'].request.user.email)).hexdigest())
-            return 'http://www.gravatar.com/avatar/' + path
+            return self.context['view'].request.user.get_profile().get_avatar(size=48)
         except:
-            return 'http://www.gravatar.com/avatar/'
+            return 'http://www.gravatar.com/avatar/?size=48'
     
     def get_commentable(self, obj):
         return self.context['view'].request.user.is_authenticated()

@@ -1,5 +1,5 @@
 <div class="media comment">
-	<a href="#" class="pull-left comment-user-img" data-placement="auto top" data-html="true" data-toggle="popover" title="<%= author %>" data-content="
+	<a href="/user/<%= author_id%>" class="pull-left comment-user-img" data-placement="auto top" data-html="true" data-toggle="popover" title="<%= author %>" data-content="
 
 		<div class='panel panel-default' style='width: 140px;'>
 			<div class='panel-body' style='padding: 4px;'>
@@ -25,14 +25,14 @@
 		</div>
 
 		" data-original-title="<%= author %>">
-		<img real="popover" src="<%= avatar %>" class="media-object img-circle" style="width: 40px; height: 40px;">
+		<img real="popover" src="<%= avatar %>" class="media-object img-circle user" style="width: 40px; height: 40px;">
 	</a>
 	<div class="media-body">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<div class="panel-title">
 					<div class="title" style="font-size: 14px;">
-						<a href="#"><%= author %></a> <%_ commented on %> <%= created %> <%_ ago %>
+						<a href="/user/<%= author_id%>" class="user"><%= author %></a> <%_ commented on %> <%= created %> <%_ ago %>
 						<% if (editable) { %>
 							<button class="btn btn-default btn-xs pull-right edit-comment hide" type="button">
 								<span class="glyphicon glyphicon-cog"></span> <%_ Edit %>

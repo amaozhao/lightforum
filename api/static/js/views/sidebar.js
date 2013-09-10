@@ -17,7 +17,7 @@ define([
 	underi18n,
 	Backbone, 
 	zh_CN,
-	model,
+	UserModel,
 	SimpleTopicListView,
 	HotTopicListView,
 	usersidebarTemplate,
@@ -35,9 +35,14 @@ define([
 			this.usertemplate = _.template(underi18n.template(usersidebarTemplate, locale));
 			this.aboutsidebartemplate = _.template(underi18n.template(aboutsidebarTemplate, locale));
 			this.options = options;
-			if(options && options.topic){
-				this.model = new model();
-				this.model.url = '/api/users/' + options.topic;
+			if(options && (options.topic || options.author)){
+				this.model = new UserModel();
+				if(options.topic){
+					this.model.url = '/api/users/topic/' + options.topic;
+				}
+				if(options.author){
+					this.model.url = '/api/users/author/' + options.author;
+				}
 				this.model.fetch();
 				this.simpletopiclist = new SimpleTopicListView(options);
 				this.listenTo(this.model, 'change', this.render);
@@ -55,7 +60,7 @@ define([
 
 		render: function () {
 			this.$el.html('');
-			if(this.options && this.options.topic){
+			if(this.options && (this.options.topic || this.options.author)){
 				this.$el.prepend(this.usertemplate(this.model.toJSON()));
 				this.$el.append(this.simpletopiclist.render().el);
 			} else {

@@ -11,6 +11,7 @@ define([
 		    "avatar":  "",
 		    "markdown":     "",
 		    "author":    "",
+		    "author_id":    "",
 		    "editable": false,
 		    "content": "",
 		    "created": "",

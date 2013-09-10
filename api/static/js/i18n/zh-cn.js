@@ -6,8 +6,8 @@ define([], function () {
 
         return {
 	        "Home":          "首页",
-	        "About":         "关于我们",
-	        "Contact":       "联系我们",
+	        "About":         "关于本站",
+	        "Contact":       "联系作者",
 	        "My Following":  "我的关注",
 	        "My Fans":       "我的粉丝",
 	        "Sign Out":      "注销",
@@ -15,9 +15,6 @@ define([], function () {
 	        "Sign Up":       "注册",
 	        "Search":        "搜索",
 	        "Profile":       "个人资料",
-
-	        //about us
-	        "About Us":       "关于我们",
 
 	        //comment
 		    "fans":               "粉丝",

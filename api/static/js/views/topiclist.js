@@ -44,7 +44,6 @@ define([
             this.$el.html('');
             this.$el.html(this.addAll());
             if(this.options && this.options.add){
-                console.log(window.currentuser)
                 this.$el.prepend(this.addtopictemplate(window.currentuser.toJSON()));
             }
             var self = this;

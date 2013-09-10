@@ -28,9 +28,16 @@ define([
 			this.template = _.template(underi18n.template(sidebartopiclistTemplate, locale));
 		
 			this.usertopics = new SimpleTopicCollection();
-			this.usertopics.url = '/api/users/' + options.topic + '/simpletopic';
+			if(options){
+				if(options.topic) {
+					this.usertopics.url = '/api/users/topic/' + options.topic + '/simpletopic';
+				}
+				if(options.author) {
+					this.usertopics.url = '/api/users/author/' + options.author + '/simpletopic';
+				}
+			}
 			this.usertopics.fetch();
-			this.listenTo(this.usertopics, 'all', this.render);
+			this.listenTo(this.usertopics, 'add reset', this.render);
 			// this.listenTo(this.model, 'add', this.render);
 
 			_.bindAll(this, 'render');

@@ -17,10 +17,6 @@ define([
 		    return parsed_url;
 		},
 		
-		comparator: function(model) {
-			return 0 - model.id;
-		},
-
 		parse: function(response) {
 		    this.next = response.next;
 		    return response.results;

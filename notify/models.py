@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
@@ -37,6 +38,7 @@ class Notification(models.Model):
 @receiver(post_save, sender = Comment)
 def notice_for_comment(instance, sender, **kwargs):
     topic = instance.topic
+    topic.save()
     if instance.author != topic.author:
         notice, created = Notification.objects.get_or_create(owner = topic.author, topic = topic)
         notice.member.add(instance.author)

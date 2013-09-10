@@ -1,13 +1,3 @@
-import hashlib
-try:
-    from django.utils.encoding import force_bytes
-except ImportError:
-    force_bytes = str
-try:
-    from urllib.parse import urlencode
-except ImportError:
-    from urllib import urlencode
-from django.utils.text import Truncator
 from django.utils.timesince import timesince
 
 from rest_framework import serializers
@@ -62,8 +52,7 @@ class CommentSerializer(serializers.ModelSerializer):
         return obj.author == self.context['view'].request.user
     
     def get_avatar(self, obj):
-        path = "%s" % (hashlib.md5(force_bytes(obj.author.email)).hexdigest())
-        return 'http://www.gravatar.com/avatar/' + path
+        return obj.author.get_profile().get_avatar(size = 48)
         
     class Meta:
         model = Comment

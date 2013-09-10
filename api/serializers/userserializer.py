@@ -1,13 +1,5 @@
 from django.contrib.auth.models import User
-import hashlib
-try:
-    from django.utils.encoding import force_bytes
-except ImportError:
-    force_bytes = str
-try:
-    from urllib.parse import urlencode
-except ImportError:
-    from urllib import urlencode
+import urllib, hashlib
 
 from rest_framework import serializers
 from comments.models import Comment
@@ -19,11 +11,10 @@ class SimpleUserSerializer(serializers.ModelSerializer):
     notifications = serializers.SerializerMethodField('get_notifications')
     
     def get_avatar(self, obj):
-        try:
-            path = "%s" % (hashlib.md5(force_bytes(obj.email)).hexdigest())
-            return 'http://www.gravatar.com/avatar/' + path
-        except:
-            return 'http://www.gravatar.com/avatar/'
+        default = "http://www.gravatar.com/avatar/"
+        path = "http://www.gravatar.com/avatar/" + hashlib.md5(obj.email.lower()).hexdigest() + "?"
+        path += urllib.urlencode({'d':default, 's':str(50)})
+        return path
     
     def get_topiccount(self, obj):
         return obj.topics.count()
@@ -56,8 +47,9 @@ class UserSerializer(serializers.ModelSerializer):
     signature = serializers.SerializerMethodField('get_signature')
     
     def get_avatar(self, obj):
-        path = "%s" % (hashlib.md5(force_bytes(obj.email)).hexdigest())
-        return 'http://www.gravatar.com/avatar/' + path
+        default = "http://www.gravatar.com/avatar/"
+        path = "http://www.gravatar.com/avatar/" + hashlib.md5(obj.email.lower()).hexdigest() + "?"
+        path += urllib.urlencode({'d':default, 's':str(50)})
     
     def get_topiccount(self, obj):
         return obj.topics.count()

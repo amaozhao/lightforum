@@ -87,11 +87,11 @@ define([
 		usertopics: function (id) {
 			$('.nosidebar').html('');
 		    this.utils({active: ''});
-		    this.topiccollection.url = '/api/users/'+id+'/topic';
+		    this.topiccollection.url = '/api/users/'+id+'/topics';
 			$(".clearfix").html('');
 		    this.mainview = new TopicListView({collection: this.topiccollection});
 		    $(".clearfix").html(this.mainview.render().el);
-		    var sidebarview = new SideBarView();
+		    var sidebarview = new SideBarView({author: id});
 			$('#sidebar').html(sidebarview.render().el);
 		},
 

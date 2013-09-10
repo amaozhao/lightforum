@@ -19,7 +19,7 @@ define([
 			"mouseleave .panel-heading":               "hidecommentconfig",
 			"mouseenter .comment-user-img > img":      "popover",
 			"mouseleave .comment":                     "hidepopover",
-			"click .user-img":                         "usertopic",
+			"click .user":                         "usertopic",
             "click .edit-comment":                     "edit",
             "click .cancel":                           "cancel",
             "click .save":                             "save",

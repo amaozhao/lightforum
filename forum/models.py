@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
@@ -14,9 +15,13 @@ class Topic(models.Model):
     
     def __unicode__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        updated = datetime.datetime.now()
+        return super(Topic, self).save(*args, **kwargs)
     
     def get_content(self):
-        return markdown(self.content, extensions=['coderlight'])
+        return markdown(self.content, extensions=['coderlight'], safe_mode=True)
     
     class Meta:
         app_label = 'forum'

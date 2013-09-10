@@ -30,7 +30,12 @@ class SimpleUserViewset(viewsets.ModelViewSet):
     
     def put(self, request, *args, **kwargs):
         return
-    
+
+class SimpleAuthorViewset(SimpleUserViewset):
+    def get_object(self, queryset=None):
+        user = User.objects.get(id = self.kwargs.get('author', None))
+        return user
+
 class UserViewset(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
@@ -54,6 +59,11 @@ class UserSimpleTopicViewset(viewsets.ModelViewSet):
         user = Topic.objects.get(id = self.kwargs.get('id', None)).author
         return Topic.objects.filter(author = user)[:5]
     
+class AuthorSimpleTopicViewset(UserSimpleTopicViewset):
+    def get_queryset(self):
+        user = User.objects.get(id = self.kwargs.get('author', None))
+        return Topic.objects.filter(author = user)[:5]
+
 class UserTopicViewset(viewsets.ModelViewSet):
     serializer_class = TopicSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly, )
