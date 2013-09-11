@@ -10,14 +10,13 @@ class SimpleTopicSerializer(serializers.ModelSerializer):
     created = serializers.SerializerMethodField('get_created')
     
     def get_created(self, obj):
-        print obj.created
         return timesince(obj.created)
     class Meta:
         model = Topic
         fields = ('id', 'title', 'created',)
         read_only_fields = ('id',)
 
-class TopicSerializer(serializers.ModelSerializer):
+class TopicSerializer(SimpleTopicSerializer):
     author = serializers.RelatedField(read_only = True)
     author_id = serializers.SerializerMethodField('get_author_id')
     author_fans = serializers.SerializerMethodField('get_author_fans')

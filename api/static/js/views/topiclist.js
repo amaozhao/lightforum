@@ -41,7 +41,6 @@ define([
         },
 
         render: function () {
-            this.$el.html('');
             this.$el.html(this.addAll());
             if(this.options && this.options.add){
                 this.$el.prepend(this.addtopictemplate(window.currentuser.toJSON()));
@@ -49,19 +48,20 @@ define([
             var self = this;
             $(window).scroll(function() { self.scroll(); });
             $('#spin').spin('tiny', 'teal');
-		    return this;
-		},
+            return this;
+        },
 
         addNew: function() {
             this.$el.prepend(this.addtopictemplate(this.usermodel.toJSON()));
         },
 
-		addOne: function (topic) {
-			var view = new TopicView({ model: topic });
-			this.$el.append(view.render().el);
-		},
+        addOne: function (topic) {
+            var view = new TopicView({ model: topic });
+            this.$el.append(view.render().el);
+        },
 
-		addAll: function () {
+        addAll: function () {
+            this.$el.html('');
 			this.collection.each(this.addOne, this);
 		},
 
@@ -105,10 +105,10 @@ define([
         save: function(e) {
             e.stopImmediatePropagation();
             e.preventDefault();
-            this.stopListening(this.collection, 'add');
             var title = this.$el.find('.addtopic .title-input').val().trim(),
                 content = this.$el.find('#new-topic').val();
             if(title && content){
+                this.stopListening(this.collection, 'add');
                 var newtopic = this.collection.create({ title: title, content: content }, {
                     wait: true,
                     error: function(model, xhr, options){
@@ -126,7 +126,6 @@ define([
                 this.$el.find('.addtopic .title-input').val('');
                 this.$el.find('#new-topic').val('');
             }
-            this.listenTo(this.collection, 'add', this.render);
         },
 		
 		scroll: function() {

@@ -1,27 +1,27 @@
 /*global define*/
 define([
-	'underscore',
-	'backbone',
-	'models/topic'
+    'underscore',
+    'backbone',
+    'models/topic'
 ], function (_, Backbone, Topic) {
-	'use strict';
+    'use strict';
 
-	var TopicCollection = Backbone.Collection.extend({
-		// Reference to this collection's model.
-		model: Topic,
+    var TopicCollection = Backbone.Collection.extend({
+        // Reference to this collection's model.
+         model: Topic,
 
-		url: function() {
-		    var original_url = "/api/topics/";
-		    var parsed_url = original_url + ( original_url.charAt( original_url.length - 1 ) == '/' ? '' : '/' );
+        url: function() {
+            var original_url = "/api/topics/";
+            var parsed_url = original_url + ( original_url.charAt( original_url.length - 1 ) == '/' ? '' : '/' );
 
-		    return parsed_url;
-		},
-		
-		parse: function(response) {
-		    this.next = response.next;
-		    return response.results;
-	    },
-	});
+            return parsed_url;
+        },
 
-	return TopicCollection;
+        parse: function(response) {
+            this.next = response.next;
+            return response.results;
+        },
+    });
+
+    return TopicCollection;
 });
