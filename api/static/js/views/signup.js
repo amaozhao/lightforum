@@ -88,7 +88,11 @@ define([
                 }).done(function(data){
                     if(data === 'done'){
                         window.currentuser.set(data);
-                        Backbone.history.navigate("", {trigger: true, replace: true});
+                        if(window.nexturl){
+                            Backbone.history.navigate(window.nexturl, {trigger: true, replace: true});
+                        } else {
+                            Backbone.history.navigate('', {trigger: true, replace: true});
+                        }
                     } else {
                         self.$el.find('.signup-placeholder').html(data);
                     }

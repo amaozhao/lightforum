@@ -64,12 +64,14 @@ define([
         signin: function(e){
             e.stopImmediatePropagation();
             e.preventDefault();
+            window.nexturl = window.location.pathname;
             Backbone.history.navigate("signin", {trigger: true, replace: true});
         },
 
         signup: function(e){
             e.stopImmediatePropagation();
             e.preventDefault();
+            window.nexturl = window.location.pathname;
             Backbone.history.navigate("signup", {trigger: true, replace: true});
         },
 

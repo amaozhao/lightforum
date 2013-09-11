@@ -64,7 +64,11 @@ define([
                         self.$el.find('.control-label').removeClass('hide');
                     } else {
                         window.currentuser.set(data);
-                        Backbone.history.navigate('', {trigger: true, replace: true});
+                        if(window.nexturl){
+                            Backbone.history.navigate(window.nexturl, {trigger: true, replace: true});
+                        } else {
+                            Backbone.history.navigate('', {trigger: true, replace: true});
+                        }
                     }
                 });
             }

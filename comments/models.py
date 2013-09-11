@@ -22,7 +22,7 @@ class Comment(models.Model):
         return super(Comment, self).save(*args, **kwargs)
 
     def get_content(self):
-        return markdown(self.content, extensions=['coderlight'], safe_mode=True)
+        return markdown(self.content, extensions=['coderlight'], safe_mode='escape')
     
     class Meta:
         ordering = ['created']

@@ -21,7 +21,7 @@ class Topic(models.Model):
         return super(Topic, self).save(*args, **kwargs)
     
     def get_content(self):
-        return markdown(self.content, extensions=['coderlight'], safe_mode=True)
+        return markdown(self.content, extensions=['coderlight'], safe_mode='escape')
     
     class Meta:
         app_label = 'forum'
