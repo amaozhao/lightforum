@@ -1,34 +1,34 @@
 /*global define*/
 define([
-	'underscore',
-	'backbone'
+    'underscore',
+    'backbone'
 ], function (_, Backbone) {
-	'use strict';
+    'use strict';
 
-	var TopicModel = Backbone.Model.extend({
-		urlRoot: '/api/topics',
+    var TopicModel = Backbone.Model.extend({
+        urlRoot: '/api/topics',
 
-		initialize: function() {
-		},
+        initialize: function() {
+        },
 
-		defaults: {
-		    "avatar":  "",
-		    "addcommentavatar": "",
-		    "markdown":     "",
-		    "author":    "",
-		    "author_id":    "",
-		    "author_gender": "male", 
-		    "author_fans": 0, 
-		    "author_followings": 0, 
-		    "can_following": false,
-		    "following": false,
-		    "title": "",
-		    "editable": false,
-		    "commentable": false,
-		    "created": "",
-		    "cut_markdown": "",
-	  	},
-	});
+        defaults: {
+            "avatar":  "",
+            "addcommentavatar": "",
+            "markdown":     "",
+            "author":    "",
+            "author_id":    "",
+            "author_gender": "male", 
+            "author_fans": 0, 
+            "author_followings": 0, 
+            "can_following": false,
+            "following": false,
+            "title": "",
+            "editable": false,
+            "commentable": false,
+            "created": "",
+            "cut_markdown": "",
+          },
+    });
 
-	return TopicModel;
+    return TopicModel;
 });

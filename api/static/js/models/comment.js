@@ -1,27 +1,27 @@
 /*global define*/
 define([
-	'underscore',
-	'backbone'
+    'underscore',
+    'backbone'
 ], function (_, Backbone) {
-	'use strict';
+    'use strict';
 
-	var CommentModel = Backbone.Model.extend({
+    var CommentModel = Backbone.Model.extend({
 
-		defaults: {
-		    "avatar":  "",
-		    "markdown":     "",
-		    "author":    "",
-		    "author_id":    "",
-		    "editable": false,
-		    "content": "",
-		    "created": "",
-		    "updated": "",
-		    "author_followings": 0,
-		    "author_fans": 0,
-		    "following": false,
-		    "can_following": false,
-	  	},
-	});
+        defaults: {
+            "avatar":  "",
+            "markdown":     "",
+            "author":    "",
+            "author_id":    "",
+            "editable": false,
+            "content": "",
+            "created": "",
+            "updated": "",
+            "author_followings": 0,
+            "author_fans": 0,
+            "following": false,
+            "can_following": false,
+          },
+    });
 
-	return CommentModel;
+    return CommentModel;
 });

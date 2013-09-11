@@ -1,14 +1,14 @@
 /*global define*/
 define([
-	'underscore',
-	'backbone',
-	'models/simpletopic'
+    'underscore',
+    'backbone',
+    'models/simpletopic'
 ], function (_, Backbone, SimpleTopicModel) {
-	'use strict';
+    'use strict';
 
-	var SimpleTopicCollection = Backbone.Collection.extend({
-		model: SimpleTopicModel,
-	});
+    var SimpleTopicCollection = Backbone.Collection.extend({
+        model: SimpleTopicModel,
+    });
 
-	return SimpleTopicCollection;
+    return SimpleTopicCollection;
 });

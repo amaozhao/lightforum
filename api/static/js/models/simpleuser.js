@@ -1,23 +1,23 @@
 /*global define*/
 define([
-	'underscore',
-	'backbone'
+    'underscore',
+    'backbone'
 ], function (_, Backbone) {
-	'use strict';
+    'use strict';
 
-	var SimpleUserModel = Backbone.Model.extend({
+    var SimpleUserModel = Backbone.Model.extend({
 
-		url: '/api/users/auth',
+        url: '/api/users/auth',
 
-		defaults: {
-		    "id": 1, 
-		    "username": "", 
-		    "email": "", 
-		    "avatar": "http://www.gravatar.com/avatar/", 
-		    "is_authenticated": false,
-		    "notifications": 0,
-		},
-	});
+        defaults: {
+            "id": 1, 
+            "username": "", 
+            "email": "", 
+            "avatar": "http://www.gravatar.com/avatar/", 
+            "is_authenticated": false,
+            "notifications": 0,
+        },
+    });
 
-	return SimpleUserModel;
+    return SimpleUserModel;
 });

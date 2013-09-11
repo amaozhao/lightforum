@@ -1,21 +1,21 @@
 /*global define*/
 define([
-	'underscore',
-	'backbone'
+    'underscore',
+    'backbone'
 ], function (_, Backbone) {
-	'use strict';
+    'use strict';
 
-	var SimpleTopicModel = Backbone.Model.extend({
+    var SimpleTopicModel = Backbone.Model.extend({
 
-		initialize: function() {
-		},
+        initialize: function() {
+        },
 
-		defaults: {
-			"id": "",
-		    "title": "",
-		    "created": "",
-	  	},
-	});
+        defaults: {
+            "id": "",
+            "title": "",
+            "created": "",
+          },
+    });
 
-	return SimpleTopicModel;
+    return SimpleTopicModel;
 });

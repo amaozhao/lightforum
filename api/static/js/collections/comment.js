@@ -1,15 +1,15 @@
 /*global define*/
 define([
-	'underscore',
-	'backbone',
-	'models/comment'
+    'underscore',
+    'backbone',
+    'models/comment'
 ], function (_, Backbone, Comment) {
-	'use strict';
+    'use strict';
 
-	var CommentCollection = Backbone.Collection.extend({
-		// Reference to this collection's model.
-		model: Comment,
-	});
+    var CommentCollection = Backbone.Collection.extend({
+        // Reference to this collection's model.
+        model: Comment,
+    });
 
-	return CommentCollection;
+    return CommentCollection;
 });

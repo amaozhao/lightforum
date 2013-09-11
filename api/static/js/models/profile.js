@@ -1,24 +1,24 @@
 /*global define*/
 define([
-	'underscore',
-	'backbone'
+    'underscore',
+    'backbone'
 ], function (_, Backbone) {
-	'use strict';
+    'use strict';
 
-	var ProfileModel = Backbone.Model.extend({
+    var ProfileModel = Backbone.Model.extend({
 
-		url: '/api/profile/',
-		
-		initialize: function() {
-		},
+        url: '/api/profile/',
+        
+        initialize: function() {
+        },
 
-		defaults: {
-			"user": "",
-		    "gender": "",
-		    "qq": "",
-		    "weibo": "",
-	  	},
-	});
+        defaults: {
+            "user": "",
+            "gender": "",
+            "qq": "",
+            "weibo": "",
+          },
+    });
 
-	return ProfileModel;
+    return ProfileModel;
 });

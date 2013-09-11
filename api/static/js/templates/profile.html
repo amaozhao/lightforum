@@ -1,30 +1,30 @@
 <div class="panel panel-success">
-	<div class="panel-heading topic-title">
-		<div class="panel-title">
-			<div class="title">
-				<h4><%_ Edit Profile %></h4>
-			</div>
-		</div>
-	</div>
-	<div class="panel-body">
-		<div class="form col-md-4 col-md-offset-4">
-			<div class="form-group">
-				<label><%_ gender %></label>
-			  	<select class="form-control" name="gender">
-			  		<option value="">---------</option>
-		          	<option value="<%_ Male %>" <% if (gender=='男') { %>selected<% } %>><%_ Male %></option>
-		          	<option value="<%_ Female %>" <% if (gender=='女') { %>selected<% } %>><%_ Female %></option>
-		        </select>
-			</div>
-			<div class="form-group">
-				<label><%_ QQ Number %></label>
-			  	<input type="text" placeholder="<%_ QQ Number %>" class="form-control" name="qq" value="<%= qq %>">
-			</div>
-			<div class="form-group">
-				<label><%_ WeiBo %></label>
-			  	<input type="text" placeholder="<%_ WeiBo %>" class="form-control" name="weibo" value="<%= weibo %>">
-			</div>
-			<button class="btn btn-primary btn-block save-profile"><%_ Save %></button>
-		</div>
-	</div>
+    <div class="panel-heading topic-title">
+        <div class="panel-title">
+            <div class="title">
+                <h4><%_ Edit Profile %></h4>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="form col-md-4 col-md-offset-4">
+            <div class="form-group">
+                <label><%_ gender %></label>
+                  <select class="form-control" name="gender">
+                      <option value="">---------</option>
+                      <option value="<%_ Male %>" <% if (gender=='男') { %>selected<% } %>><%_ Male %></option>
+                      <option value="<%_ Female %>" <% if (gender=='女') { %>selected<% } %>><%_ Female %></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label><%_ QQ Number %></label>
+                  <input type="text" placeholder="<%_ QQ Number %>" class="form-control" name="qq" value="<%= qq %>">
+            </div>
+            <div class="form-group">
+                <label><%_ WeiBo %></label>
+                  <input type="text" placeholder="<%_ WeiBo %>" class="form-control" name="weibo" value="<%= weibo %>">
+            </div>
+            <button class="btn btn-primary btn-block save-profile"><%_ Save %></button>
+        </div>
+    </div>
 </div>

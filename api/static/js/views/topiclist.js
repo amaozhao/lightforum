@@ -1,36 +1,45 @@
 /*global define*/
 define([
-	'jquery',
-	'underscore',
-	'underi18n',
-	'backbone',
+    'jquery',
+    'underscore',
+    'underi18n',
+    'backbone',
     'i18n/zh-cn',
-	'collections/topic',
+    'collections/topic',
     'models/simpleuser',
-	'views/topic',
+    'views/topic',
     'text!templates/addtopic.html',
-	'jquery.bootstrap',
-	'jquery.spin'
-], function ($, _, underi18n, Backbone, zh_CN, TopicCollection, SimpleUserModel, TopicView, addtopicTemplate) {
-	'use strict';
+    'text!templates/none.html',
+    'jquery.bootstrap',
+    'jquery.spin'
+], function (
+    $, 
+    _, 
+    underi18n, 
+    Backbone, 
+    zh_CN, 
+    TopicCollection, 
+    SimpleUserModel, 
+    TopicView, 
+    addtopicTemplate,
+    noneTemplate) {
+    'use strict';
 
-	var TopicListView = Backbone.View.extend({
+    var TopicListView = Backbone.View.extend({
+        className: "topic-list",
 
-        // addtopictemplate: _.template(addtopicTemplate),
-		
-		className: "topic-list",
-
-		events: {
+        events: {
             "blur .addtopic .title-input": "notnone",
             "click .topic-placeholder":    "edit",
             "click .add-topic-cancel":     "cancel",
             "click .add-topic-save":       "save"
-		},
+        },
 
-		initialize: function (options) {
+        initialize: function (options) {
             var zh = new zh_CN();
-		    var locale = underi18n.MessageFactory(zh);
-			this.addtopictemplate = _.template(underi18n.template(addtopicTemplate, locale));
+            var locale = underi18n.MessageFactory(zh);
+            this.addtopictemplate = _.template(underi18n.template(addtopicTemplate, locale));
+            this.nonetemplate = _.template(underi18n.template(noneTemplate, locale));
             this.options = options;
             this.usermodel = window.currentuser;
             this.listenTo(window.currentuser, 'change', this.render);
@@ -62,8 +71,12 @@ define([
 
         addAll: function () {
             this.$el.html('');
-			this.collection.each(this.addOne, this);
-		},
+            if(_.size(this.collection) === 0) {
+                this.$el.html(this.nonetemplate());
+            } else {
+                this.collection.each(this.addOne, this);
+            }
+        },
 
         notnone: function(e) {
             var title = this.$el.find('.addtopic .title-input').val().trim();
@@ -127,8 +140,8 @@ define([
                 this.$el.find('#new-topic').val('');
             }
         },
-		
-		scroll: function() {
+
+        scroll: function() {
             var bottom = $(document).height() - $(window).height() - 50 <= $(window).scrollTop();
             var self = this;
             if (bottom && self.collection.next) {
@@ -152,7 +165,7 @@ define([
                 });
             }
         },
-	});
+    });
 
-	return TopicListView;
+    return TopicListView;
 });

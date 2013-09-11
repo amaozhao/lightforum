@@ -1,23 +1,23 @@
 /*global define*/
 define([
-	'underscore',
-	'backbone'
+    'underscore',
+    'backbone'
 ], function (_, Backbone) {
-	'use strict';
+    'use strict';
 
-	var NotificationModel = Backbone.Model.extend({
+    var NotificationModel = Backbone.Model.extend({
 
-		url: '/api/users/auth',
+        url: '/api/users/auth',
 
-		defaults: {
-		    "id": 1, 
-		    "owner": "", 
-		    "member": [], 
-		    "topic_id": "", 
-		    "topic_title": "", 
-		    "member_count": 0
-		},
-	});
+        defaults: {
+            "id": 1, 
+            "owner": "", 
+            "member": [], 
+            "topic_id": "", 
+            "topic_title": "", 
+            "member_count": 0
+        },
+    });
 
-	return NotificationModel;
+    return NotificationModel;
 });
