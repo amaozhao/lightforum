@@ -23,14 +23,18 @@ from django.conf.urls import url
 from django.views.generic.base import TemplateView
 
 from registration.backends.api.views import RegistrationView
+from registration.backends.api.auth.signin import SigninView
 
 
 urlpatterns = patterns('',
-                       url(r'^register/$',
-                           RegistrationView.as_view({'post': 'create'}),
-                           name='registration_register'),
-                       url(r'^register/closed/$',
-                           TemplateView.as_view(template_name='registration/registration_closed.html'),
-                           name='registration_disallowed'),
-                       (r'', include('registration.auth_urls')),
-                       )
+    url(r'^register/$',
+        RegistrationView.as_view({'post': 'create'}),
+        name='registration_register'),
+    url(r'^register/closed/$',
+        TemplateView.as_view(template_name='registration/registration_closed.html'),
+        name='registration_disallowed'),
+    url(r'^signin/$',
+        SigninView.as_view({'post': 'create'}),
+        name='registration_signin'),
+    (r'', include('registration.auth_urls')),
+)

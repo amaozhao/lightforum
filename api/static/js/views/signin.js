@@ -55,14 +55,11 @@ define([
             if(username && password){
                 $.ajax({
                     type: 'POST',
-                    url: '/api/users/auth',
+                    url: '/accounts/signin/',
                     dataType: 'json',
                     data: { username: username, password: password, csrfmiddlewaretoken: csrfmiddlewaretoken },
-                }).done(function(data){
-                    if(data.error){
-                        self.$el.find('.form-group').addClass('has-error');
-                        self.$el.find('.control-label').removeClass('hide');
-                    } else {
+                }).done(function(data, textStatus, jqXHR){
+                    if(textStatus === 'success'){
                         window.currentuser.set(data);
                         if(window.nexturl){
                             Backbone.history.navigate(window.nexturl, {trigger: true, replace: true});
@@ -70,6 +67,9 @@ define([
                             Backbone.history.navigate('', {trigger: true, replace: true});
                         }
                     }
+                }).fail(function(jqXHR, textStatus){
+                    self.$el.find('input[name=username]').parent().addClass('has-error');
+                    self.$el.find('input[name=username]').prev('label').removeClass('hide');
                 });
             }
         },
