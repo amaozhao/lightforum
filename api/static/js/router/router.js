@@ -15,6 +15,7 @@ define([
     'views/signin',
     'views/signup',
     'views/profile',
+    'views/password_change',
     'views/nofound',
     'views/followinglist'
 ], function (
@@ -33,24 +34,26 @@ define([
     SigninView,
     SignupView,
     ProfileView,
+    PasswordChangeView,
     NoFoundView,
     FollowingListView) {
     'use strict';
 
     var Router = Backbone.Router.extend({
         routes: {
-            "":                 "index",
-            "topic/:id":        "detail",
-            "user/:id":         "usertopics",
+            "":                  "index",
+            "topic/:id":         "detail",
+            "user/:id":          "usertopics",
             "about":             "about",
-            "contact":             "contact",
-            "signin":             "sigin",
-            "signup":             "sigup",
-            "search/:keyword":  "search",
-            "myfollowing":      "myfollowing",
-            "myfans":           "myfans",
+            "contact":           "contact",
+            "signin":            "sigin",
+            "signup":            "sigup",
+            "search/:keyword":   "search",
+            "myfollowing":       "myfollowing",
+            "myfans":            "myfans",
             "profile":           "profile",
-            "*path":            "nofound",
+            "passwordchange":    "passwordchange",
+            "*path":             "nofound",
         },
         
         initialize: function () {
@@ -196,12 +199,28 @@ define([
         },
 
         profile: function() {
+            if(!window.currentuser.get('username')){
+                Backbone.history.navigate("signin", {trigger: true, replace: true});
+                return;
+            }
             $(".clearfix").html('');
             this.utils({active: ''});
-            var profileview = new ProfileView();
-            $(".clearfix").html(profileview.render().el);
-            var sidebarview = new SideBarView();
-            $('#sidebar').html(sidebarview.render().el);
+            this.mainview = new ProfileView();
+            $(".clearfix").html(this.mainview.render().el);
+            this.sidebarview = new SideBarView();
+            $('#sidebar').html(this.sidebarview.render().el);
+        },
+
+        passwordchange: function() {
+            if(!window.currentuser.get('username')){
+                Backbone.history.navigate("signin", {trigger: true, replace: true});
+                return;
+            }
+            this.utils({active: ''});
+            $(".clearfix").html('');
+            $('#sidebar').html('');
+            this.mainview = new PasswordChangeView();
+            $('.nosidebar').html(this.mainview.render().el);
         },
 
         utils: function(options){

@@ -5,16 +5,17 @@ define([], function () {
     var zh_CN= function() {
 
         return {
-            "Home":          "首页",
-            "About":         "关于本站",
-            "Contact":       "联系作者",
-            "My Following":  "我的关注",
-            "My Fans":       "我的粉丝",
-            "Sign Out":      "注销",
-            "Sign In":       "登陆",
-            "Sign Up":       "注册",
-            "Search":        "搜索",
-            "Profile":       "个人资料",
+            "Home":                 "首页",
+            "About":                "关于本站",
+            "Contact":              "联系作者",
+            "My Following":         "我的关注",
+            "My Fans":              "我的粉丝",
+            "Sign Out":             "注销",
+            "Sign In":              "登陆",
+            "Sign Up":              "注册",
+            "Search":               "搜索",
+            "Profile":              "个人资料",
+            "Change Password":      "修改密码",
 
             //comment
             "fans":               "粉丝",
@@ -84,6 +85,13 @@ define([], function () {
 
             //none.html
             "Has no Topic":               "暂无话题",
+
+            // password-change.html
+            "Your password is wrong.":                "你的密码不正确",
+            "Old Password":                           "旧密码",
+            "New Password(More then 6 charatetor)":   "新密码(至少6位)",
+            "New Password(Repeat)":                   "新重复密码",
+            "Password Changed":                       "密码已修改"
         }
     }
 

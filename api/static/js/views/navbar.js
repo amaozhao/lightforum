@@ -29,6 +29,7 @@ define([
             "click .myfollowing": "myfollowing",
             "click .myfans": "myfans",
             "click .profile": "profile",
+            "click .password-change": "password_change",
             "mouseenter .notification-tooltip": "tooltip",
             "mouseleave .notification-tooltip": "hidetooltip",
             "click .notification-popover": "showpopover",
@@ -117,7 +118,15 @@ define([
         profile: function(e) {
             e.stopImmediatePropagation();
             e.preventDefault();
+            window.nexturl = window.location.pathname;
             Backbone.history.navigate('profile', {trigger: true, replace: true});
+        },
+
+        password_change: function(e) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            window.nexturl = window.location.pathname;
+            Backbone.history.navigate('passwordchange', {trigger: true, replace: true});
         },
 
         notification: function(e) {

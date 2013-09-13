@@ -1,22 +1,18 @@
-from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-from django.views.generic.edit import FormMixin
-from django.views.generic.base import TemplateResponseMixin
 
 from registration import signals
 from registration.forms import RegistrationForm
+from registration.backends.api.baseview import BaseView
 
-from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
 from rest_framework.response import Response
 
 from api.serializers.userserializer import SimpleUserSerializer
 
 
-class RegistrationView(TemplateResponseMixin, ModelViewSet):
+class RegistrationView(BaseView):
     """
     A registration backend which implements the simplest possible
     workflow: a user supplies a username, email address and password
@@ -59,18 +55,6 @@ class RegistrationView(TemplateResponseMixin, ModelViewSet):
         """
         return form_class(**self.get_form_kwargs())
 
-    def get_form_kwargs(self):
-        """
-        Returns the keyword arguments for instantiating the form.
-        """
-        kwargs = {'initial': {}}
-        if self.request.method in ('POST', 'PUT'):
-            kwargs.update({
-                'data': self.request.POST,
-                'files': self.request.FILES,
-            })
-        return kwargs
-
     def form_valid(self, form, request=None):
         """
         If the form is valid, redirect to the supplied URL.
@@ -81,18 +65,3 @@ class RegistrationView(TemplateResponseMixin, ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED,
                         headers=headers)
-
-
-    def form_invalid(self, form):
-        """
-        If the form is invalid, re-render the context data with the
-        data-filled form and errors.
-        """
-        return self.render_to_response(self.get_context_data(form=form))
-
-    def get_context_data(self, **kwargs):
-        context = {}
-        if 'view' not in kwargs:
-            context['view'] = self
-        context.update(kwargs)
-        return context
