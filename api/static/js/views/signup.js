@@ -83,21 +83,20 @@ define([
                 $.ajax({
                     type: 'POST',
                     url: '/accounts/register/',
-                    dataType: 'html',
+                    dataType: 'json',
                     data: { username: username, email: email, password1: password1, password2: password2, csrfmiddlewaretoken: csrfmiddlewaretoken },
-                }).done(function(data){
-                    if(data === 'done'){
+                }).done(function(data, textStatus, jqXHR){
+                    if(textStatus === 'success'){
                         window.currentuser.set(data);
                         if(window.nexturl){
                             Backbone.history.navigate(window.nexturl, {trigger: true, replace: true});
                         } else {
                             Backbone.history.navigate('', {trigger: true, replace: true});
                         }
-                    } else {
-                        self.$el.find('.signup-placeholder').html(data);
                     }
                 }).fail(function(jqXHR, textStatus){
-                    console.log( "Request failed: " + textStatus );
+                    self.$el.find('input[name=username]').parent().addClass('has-error');
+                    self.$el.find('input[name=username]').prev('label').removeClass('hide');
                 });
             }
         },

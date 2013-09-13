@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include('api.urls')),
     url(r'^friends/', include('friends.urls')),
-    url(r'^accounts/', include('registration.backends.simple.urls')),
+    url(r'^accounts/', include('registration.backends.api.urls')),
     # url(r'^accounts/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^', include('forum.urls')),
 )

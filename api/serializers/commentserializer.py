@@ -39,7 +39,6 @@ class CommentSerializer(serializers.ModelSerializer):
             return False
     
     def get_created(self, obj):
-        print obj.created
         return timesince(obj.created)
     
     def get_updated(self, obj):

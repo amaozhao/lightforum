@@ -51,6 +51,7 @@ define([], function () {
             "Email":                                      "邮件地址",
             "Password(More then 6 charatetor)":           "密码(至少6位)",
             "Password Repeat":                            "重复密码",
+            "The Username has been registered.":          "用户名已被注册", 
 
             //simpletopiclist
             "User Topics":       "作者话题",
