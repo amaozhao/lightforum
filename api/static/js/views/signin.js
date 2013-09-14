@@ -19,7 +19,8 @@ define([
         // template: _.template(signinTemplate),
         
         events: {
-            "click .signin": "signin",
+            "click .signin":                        "signin",
+            "click .password-reset":                "passwordreset",
             "keypress input[name=username]":        "keypresssignin",
             "keypress input[name=password]":        "keypresssignin",
         },
@@ -34,6 +35,12 @@ define([
         render: function () {
             this.$el.html(this.template);
             return this;
+        },
+
+        passwordreset: function(e) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            Backbone.history.navigate("passwordreset", {trigger: true, replace: true});
         },
 
         signin: function(e){

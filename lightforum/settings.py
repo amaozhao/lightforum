@@ -4,7 +4,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('AmaoZhao', 'amaozhao@126.com'),
 )
 
 MANAGERS = ADMINS
@@ -148,10 +148,10 @@ INSTALLED_APPS = (
 )
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.qq.com'
-EMAIL_PORT = '25'
-EMAIL_HOST_USER=''
-EMAIL_HOST_PASSWORD=''
+EMAIL_HOST= 'smtp.126.com'
+EMAIL_PORT= 25
+EMAIL_HOST_USER = 'amaozhao'
+EMAIL_HOST_PASSWORD = '142857'
 EMAIL_USE_TLS = True
 
 ACCOUNT_ACTIVATION_DAYS = 7

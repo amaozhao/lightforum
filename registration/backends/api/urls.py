@@ -25,6 +25,7 @@ from django.views.generic.base import TemplateView
 from registration.backends.api.views import RegistrationView
 from registration.backends.api.auth.signin import SigninView
 from registration.backends.api.auth.password_change import PasswordChangeView
+from registration.backends.api.auth.password_reset import PasswordResetView
 
 
 urlpatterns = patterns('',
@@ -39,6 +40,9 @@ urlpatterns = patterns('',
         name='registration_signin'),
     url(r'^password/change/$',
         PasswordChangeView.as_view({'post': 'create'}),
+        name='auth_password_change'),
+    url(r'^password/reset/$',
+        PasswordResetView.as_view({'post': 'create'}),
         name='auth_password_change'),
     (r'', include('registration.auth_urls')),
 )

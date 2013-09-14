@@ -94,6 +94,12 @@ define([], function () {
             "New Password(Repeat)":                   "新重复密码",
             "Password Changed":                       "密码已修改",
             "Two Password not matched.":              "2次密码输入不一致",
+
+            // password-reset.html
+            "Reset Password":                         "重设密码",
+            "Email format is incorrect":              "邮件格式不正确",
+            "We have sent you an email with a link to reset your password.":          "我们已经向您发出一封来重置您密码的电子邮件.",
+            "Please check your email and click the link to continue.":               "请检查您的电子邮件并点击链接继续.",
         }
     }
 

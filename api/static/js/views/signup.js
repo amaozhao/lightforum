@@ -19,10 +19,10 @@ define([
         
         events: {
             "click .signup":                        "signup",
-            "keypress input[name=username]":        "keypresssignin",
-            "keypress input[name=email]":            "keypresssignin",
-            "keypress input[name=password1]":        "keypresssignin",
-            "keypress input[name=password2]":        "keypresssignin",
+            "keypress input[name=username]":        "keypresssignup",
+            "keypress input[name=email]":           "keypresssignup",
+            "keypress input[name=password1]":       "keypresssignup",
+            "keypress input[name=password2]":       "keypresssignup",
         },
 
         initialize: function (options) {
@@ -30,7 +30,7 @@ define([
             var locale = underi18n.MessageFactory(zh);
             this.template = _.template(underi18n.template(signupTemplate, locale));
         
-            _.bindAll(this, 'render', 'signup', 'keypresssignin');
+            _.bindAll(this, 'render', 'signup', 'keypresssignup');
         },
 
         render: function () {
@@ -101,7 +101,7 @@ define([
             }
         },
 
-        keypresssignin: function(e) {
+        keypresssignup: function(e) {
             if (e.which !== 13) {
                 return;
             }

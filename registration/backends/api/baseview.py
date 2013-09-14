@@ -1,6 +1,8 @@
 from django.views.generic.base import TemplateResponseMixin
 
 from rest_framework.viewsets import ModelViewSet
+from rest_framework import status
+from rest_framework.response import Response
 
 class BaseView(TemplateResponseMixin, ModelViewSet):
     """
@@ -60,3 +62,15 @@ class BaseView(TemplateResponseMixin, ModelViewSet):
             context['view'] = self
         context.update(kwargs)
         return context
+
+    def get(self, request, *args, **kwargs):
+        return Response({'done': 'success'}, status=HTTP_400_BAD_REQUEST)
+
+    def put(self, request, *args, **kwargs):
+        return Response({'done': 'success'}, status=HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, *args, **kwargs):
+        return Response({'done': 'success'}, status=HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, *args, **kwargs):
+        return Response({'done': 'success'}, status=HTTP_400_BAD_REQUEST)

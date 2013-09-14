@@ -7,8 +7,7 @@ define([
     'i18n/zh-cn',
     'models/simpleuser',
     'text!templates/password_change.html',
-    'text!templates/password_change_alert.html',
-    'jquery.spin'
+    'text!templates/password_change_alert.html'
 ], function (
     $, 
     _, 
@@ -28,8 +27,8 @@ define([
 
         events: {
             "click .password-change": "password_change",
-            "keypress input[name=username]":        "keypresssignin",
-            "keypress input[name=password]":        "keypresssignin",
+            "keypress input[name=new_password1]":        "keypresspasswordchange",
+            "keypress input[name=new_password2]":        "keypresspasswordchange",
         },
 
         initialize: function (options) {
@@ -92,11 +91,11 @@ define([
             }
         },
 
-        keypresssignin: function(e) {
+        keypresspasswordchange: function(e) {
             if (e.which !== 13) {
                 return;
             }
-            this.signin(e);
+            this.password_change(e);
         },
     });
 

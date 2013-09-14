@@ -16,6 +16,7 @@ define([
     'views/signup',
     'views/profile',
     'views/password_change',
+    'views/password_reset',
     'views/nofound',
     'views/followinglist'
 ], function (
@@ -35,6 +36,7 @@ define([
     SignupView,
     ProfileView,
     PasswordChangeView,
+    PasswordResetView,
     NoFoundView,
     FollowingListView) {
     'use strict';
@@ -53,6 +55,7 @@ define([
             "myfans":            "myfans",
             "profile":           "profile",
             "passwordchange":    "passwordchange",
+            "passwordreset":    "passwordreset",
             "*path":             "nofound",
         },
         
@@ -220,6 +223,18 @@ define([
             $(".clearfix").html('');
             $('#sidebar').html('');
             this.mainview = new PasswordChangeView();
+            $('.nosidebar').html(this.mainview.render().el);
+        },
+
+        passwordreset: function() {
+            if(window.currentuser.get('username')){
+                Backbone.history.navigate("", {trigger: true, replace: true});
+                return;
+            }
+            this.utils({active: ''});
+            $(".clearfix").html('');
+            $('#sidebar').html('');
+            this.mainview = new PasswordResetView();
             $('.nosidebar').html(this.mainview.render().el);
         },
 
