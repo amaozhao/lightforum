@@ -3,10 +3,9 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'collections/user',
     'views/friend',
     'jquery.bootstrap'
-], function ($, _, Backbone, UserCollection, FriendView) {
+], function ($, _, Backbone, FriendView) {
     'use strict';
 
     var FollowingListView = Backbone.View.extend({

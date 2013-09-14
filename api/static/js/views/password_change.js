@@ -56,10 +56,15 @@ define([
 
             if(!old_password){
                 this.$el.find('input[name=old_password]').focus().closest('.form-group').addClass('has-error');
+                return;
             }
             if(!new_password1 || !new_password2 || (new_password1 !== new_password2)){
                 this.$el.find('input[name=password1]').focus().closest('.form-group').addClass('has-error');
-                this.$el.find('input[name=password2]').focus().closest('.form-group').addClass('has-error');
+                this.$el.find('input[name=password2]').closest('.form-group').addClass('has-error');
+                if(new_password1 !== new_password2) {
+                    this.$el.find('input[name=password1]').prev().removeClass('hide');
+                }
+                return;
             }
 
             if(old_password && new_password1 && new_password2){
@@ -76,6 +81,9 @@ define([
                 }).done(function(data, textStatus, jqXHR){
                     if(textStatus === 'success'){
                         self.$el.prepend(self.alerttemplate);
+                        self.$el.find('input[name=old_password]').val('');
+                        self.$el.find('input[name=new_password1]').val('');
+                        self.$el.find('input[name=new_password2]').val('');
                     }
                 }).fail(function(jqXHR, textStatus){
                     self.$el.find('input[name=old_password]').parent().addClass('has-error');

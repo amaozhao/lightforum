@@ -50,6 +50,7 @@ class UserSerializer(serializers.ModelSerializer):
         default = "http://www.gravatar.com/avatar/"
         path = "http://www.gravatar.com/avatar/" + hashlib.md5(obj.email.lower()).hexdigest() + "?"
         path += urllib.urlencode({'d':default, 's':str(50)})
+        return path
     
     def get_topiccount(self, obj):
         return obj.topics.count()

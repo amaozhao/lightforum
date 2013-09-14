@@ -45,7 +45,8 @@ define([], function () {
             "Please sign in":                            "请登陆",
             "Username":                                  "用户名",
             "Password":                                  "密码",
-            "Remember me":                               "记住我",
+            "Remember Me":                               "记住我",
+            "Foget Password":                            "忘记密码",
             "Your username and password donot match.":   "您的用户名和密码不匹配.",
 
             //signup
@@ -91,7 +92,8 @@ define([], function () {
             "Old Password":                           "旧密码",
             "New Password(More then 6 charatetor)":   "新密码(至少6位)",
             "New Password(Repeat)":                   "新重复密码",
-            "Password Changed":                       "密码已修改"
+            "Password Changed":                       "密码已修改",
+            "Two Password not matched.":              "2次密码输入不一致",
         }
     }
 
