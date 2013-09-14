@@ -80,10 +80,8 @@ define([
         },
 
         index: function () {
-            $('.nosidebar').html('');
             this.utils({active: 'home'});
             this.topiccollection.url = '/api/topics/';
-            $(".clearfix").html('');
             this.mainview = new TopicListView({collection: this.topiccollection, add: true});
             $(".clearfix").html(this.mainview.render().el);
             var sidebarview = new SideBarView();
@@ -91,10 +89,8 @@ define([
         },
 
         usertopics: function (id) {
-            $('.nosidebar').html('');
             this.utils({active: ''});
             this.topiccollection.url = '/api/users/'+id+'/topics';
-            $(".clearfix").html('');
             this.mainview = new TopicListView({collection: this.topiccollection});
             $(".clearfix").html(this.mainview.render().el);
             var sidebarview = new SideBarView({author: id});
@@ -102,9 +98,7 @@ define([
         },
 
         about: function() {
-            $('.nosidebar').html('');
             this.utils({active: 'about'});
-            $(".clearfix").html('');
             this.mainview = new AboutView();
             $(".clearfix").html(this.mainview.render().el);
             var sidebarview = new SideBarView();
@@ -112,9 +106,7 @@ define([
         },
 
         contact: function() {
-            $('.nosidebar').html('');
             this.utils({active: 'contact'});
-            $(".clearfix").html('');
             this.mainview = new ContactView();
             $(".clearfix").html(this.mainview.render().el);
             var sidebarview = new SideBarView();
@@ -127,8 +119,6 @@ define([
                 return;
             }
             this.utils({active: ''});
-            $(".clearfix").html('');
-            $('#sidebar').html('');
             this.mainview = new SigninView();
             $('.nosidebar').html(this.mainview.render().el);
         },
@@ -139,16 +129,12 @@ define([
                 return;
             }
             this.utils({active: ''});
-            $(".clearfix").html('');
-            $('#sidebar').html('');
             this.mainview = new SignupView();
             $('.nosidebar').html(this.mainview.render().el);
         },
 
         detail: function(id) {
-            $('.nosidebar').html('');
             this.utils({active: ''});
-            $(".clearfix").html('');
             this.topic.set("id", id);
             this.topic.fetch();
             this.mainview = new TopicView({ model: this.topic, detail: true });
@@ -158,10 +144,8 @@ define([
         },
         
         search: function(keyword) {
-            $('.nosidebar').html('');
             this.utils({active: ''});
             this.topiccollection.url = '/api/topics/?keyword='+keyword;
-            $(".clearfix").html('');
             this.mainview = new TopicListView({collection: this.topiccollection});
             $(".clearfix").html(this.mainview.render().el);
             $('.nav .active').removeClass('active');
@@ -170,23 +154,19 @@ define([
         },
 
         myfollowing: function() {
-            $('.nosidebar').html('');
             this.utils({active: ''});
             this.friendcollection = new UserCollection();
             this.mainview = new FollowingListView({collection: this.friendcollection});
-            $(".clearfix").html('');
             $(".clearfix").html(this.mainview.render().el);
             var sidebarview = new SideBarView();
             $('#sidebar').html(sidebarview.render().el);
         },
 
         myfans: function() {
-            $('.nosidebar').html('');
             this.utils({active: ''});
             this.friendcollection = new UserCollection();
             this.friendcollection.url = '/api/myfans/'
             this.mainview = new FollowingListView({collection: this.friendcollection});
-            $(".clearfix").html('');
             $(".clearfix").html(this.mainview.render().el);
             var sidebarview = new SideBarView();
             $('#sidebar').html(sidebarview.render().el);
@@ -195,8 +175,6 @@ define([
         nofound: function(path) {
             this.utils({active: ''});
             var nofoundview = new NoFoundView();
-            $('.clearfix').html('');
-            $('#sidebar').html('');
             $('.nosidebar').html(nofoundview.render().el);
             $('.nav .active').removeClass('active');
         },
@@ -206,7 +184,6 @@ define([
                 Backbone.history.navigate("signin", {trigger: true, replace: true});
                 return;
             }
-            $(".clearfix").html('');
             this.utils({active: ''});
             this.mainview = new ProfileView();
             $(".clearfix").html(this.mainview.render().el);
@@ -220,8 +197,6 @@ define([
                 return;
             }
             this.utils({active: ''});
-            $(".clearfix").html('');
-            $('#sidebar').html('');
             this.mainview = new PasswordChangeView();
             $('.nosidebar').html(this.mainview.render().el);
         },
@@ -232,13 +207,14 @@ define([
                 return;
             }
             this.utils({active: ''});
-            $(".clearfix").html('');
-            $('#sidebar').html('');
             this.mainview = new PasswordResetView();
             $('.nosidebar').html(this.mainview.render().el);
         },
 
         utils: function(options){
+            $('.nosidebar').html('');
+            $(".clearfix").html('');
+            $('#sidebar').html('');
             this.navbarview = new NavBarView({active: options.active});
             $('.navbar-collapse.collapse').html(this.navbarview.render().el);
         }
