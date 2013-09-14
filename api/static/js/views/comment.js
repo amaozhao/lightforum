@@ -63,6 +63,7 @@ define([
             var editor = CodeMirror.fromTextArea(document.getElementById("comment-editor-"+ this.model.id), {
                 mode: 'gfm',
                 lineNumbers: false,
+                lineWrapping: true, //是否自动换行
                 theme: "default"
               });
               editor.on("change", function() {

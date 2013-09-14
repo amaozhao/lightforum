@@ -117,9 +117,10 @@ define([
             var editor = CodeMirror.fromTextArea(document.getElementById("topic-editor-"+ this.model.id), {
                 mode: 'gfm',
                 lineNumbers: false,
+                lineWrapping: true, //是否自动换行
                 theme: "default"
-              });
-              editor.on("change", function() {
+            });
+            editor.on("change", function() {
                 $('#topic-editor-'+ self.model.id).val(editor.getValue());
             });
             editor.on("focus", function() {
@@ -146,9 +147,10 @@ define([
             var editor = CodeMirror.fromTextArea(document.getElementById("new-comment"), {
                 mode: 'gfm',
                 lineNumbers: false,
+                lineWrapping: true, //是否自动换行
                 theme: "default"
-              });
-              editor.on("change", function() {
+            });
+            editor.on("change", function() {
                 $('#new-comment').val(editor.getValue());
             });
             editor.on("focus", function() {

@@ -44,7 +44,6 @@ footer {
   padding: 6px;
   font-size: 14px;
   font-family: sans-serif;
-  height: 34px;
   transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
   vertical-align: middle;
   height: auto;
