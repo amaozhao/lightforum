@@ -38,7 +38,6 @@ define([
             }
             this.usertopics.fetch();
             this.listenTo(this.usertopics, 'add reset', this.render);
-            _.bindAll(this, 'render');
         },
 
         render: function () {
@@ -53,7 +52,7 @@ define([
         },
 
         usertopicaddAll: function () {
-            if(_.size(this.collection) === 0) {
+            if(_.size(this.usertopics) === 0) {
                 this.$el.find('.panel-body').html(this.nonetemplate());
             } else {
                 this.usertopics.each(this.usertopicaddOne, this);

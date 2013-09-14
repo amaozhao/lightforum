@@ -29,10 +29,10 @@ define([
             var locale = underi18n.MessageFactory(zh);
             this.template = _.template(underi18n.template(sidebarhottopicsTemplate, locale));
             this.nonetemplate = _.template(underi18n.template(noneTemplate, locale));
-            this.hottopics = new SimpleTopicCollection();
-            this.hottopics.url = '/api/topics/hot';
-            this.hottopics.fetch();
-            this.listenTo(this.hottopics, 'all', this.render);
+            this.collection = new SimpleTopicCollection();
+            this.collection.url = '/api/topics/hot';
+            this.collection.fetch();
+            this.listenTo(this.collection, 'all', this.render);
             // this.listenTo(this.model, 'add', this.render);
 
             _.bindAll(this, 'render');
@@ -53,7 +53,7 @@ define([
             if(_.size(this.collection) === 0) {
                 this.$el.find('.panel-body').html(this.nonetemplate());
             } else {
-                this.hottopics.each(this.hottopicaddOne, this);
+                this.collection.each(this.hottopicaddOne, this);
             }
         },
     });

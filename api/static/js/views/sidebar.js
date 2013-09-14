@@ -46,6 +46,7 @@ define([
                 this.model.fetch();
                 this.simpletopiclist = new SimpleTopicListView(options);
                 this.listenTo(this.model, 'change', this.render);
+                this.listenTo(this.simpletopiclist, 'add reset', this.render);
             } else {
                 this.hottopiclist = new HotTopicListView();
             }
