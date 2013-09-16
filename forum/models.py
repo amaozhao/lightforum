@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
-from markdown import markdown
+from markdown import markdown, Markdown
 
 class Topic(models.Model):
     author = models.ForeignKey(User, related_name = 'topics')
@@ -21,7 +21,7 @@ class Topic(models.Model):
         return super(Topic, self).save(*args, **kwargs)
     
     def get_content(self):
-        return markdown(self.content, extensions=['coderlight'], safe_mode='escape')
+        return markdown(self.content, extensions=['coderlight',], safe_mode='escape')
     
     class Meta:
         app_label = 'forum'

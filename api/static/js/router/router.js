@@ -64,7 +64,7 @@ define([
             var id = $('meta[name="id"]').attr('content'),
                 username = $('meta[name="username"]').attr('content'),
                 email = $('meta[name="email"]').attr('content'),
-                notifications = $('meta[name="notifications"]').attr('content'),
+                notifications = parseInt($('meta[name="notifications"]').attr('content')),
                 avatar = $('meta[name="avatar"]').attr('content'),
                 is_authenticated;
             if(id){
