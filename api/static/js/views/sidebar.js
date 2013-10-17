@@ -64,7 +64,11 @@ define([
             if(this.options && (this.options.topic || this.options.author)){
                 this.$el.prepend(this.usertemplate(this.model.toJSON()));
                 this.$el.append(this.simpletopiclist.render().el);
+                if(this.options.author){
+                    document.title = this.model.get('username') + ' | ' + window.base_title;
+                }
             } else {
+                document.title = window.base_title;
                 this.$el.prepend(this.aboutsidebartemplate());
                 this.$el.append(this.hottopiclist.render().el);
             }

@@ -32,6 +32,13 @@ from rest_framework.relations import *
 from rest_framework.fields import *
 
 
+def pretty_name(name):
+    """Converts 'first_name' to 'First name'"""
+    if not name:
+        return ''
+    return name.replace('_', ' ').capitalize()
+
+
 class RelationsList(list):
     _deleted = []
 
@@ -301,14 +308,19 @@ class BaseSerializer(WritableField):
         """
         ret = self._dict_class()
         ret.fields = self._dict_class()
-        ret.empty = obj is None
 
         for field_name, field in self.fields.items():
+            if field.read_only and obj is None:
+               continue
             field.initialize(parent=self, field_name=field_name)
             key = self.get_field_key(field_name)
             value = field.field_to_native(obj, field_name)
+            method = getattr(self, 'transform_%s' % field_name, None)
+            if callable(method):
+                value = method(obj, value)
             ret[key] = value
-            ret.fields[key] = field
+            ret.fields[key] = self.augment_field(field, field_name, key, value)
+
         return ret
 
     def from_native(self, data, files):
@@ -316,6 +328,7 @@ class BaseSerializer(WritableField):
         Deserialize primitives -> objects.
         """
         self._errors = {}
+
         if data is not None or files is not None:
             attrs = self.restore_fields(data, files)
             if attrs is not None:
@@ -325,6 +338,15 @@ class BaseSerializer(WritableField):
 
         if not self._errors:
             return self.restore_object(attrs, instance=getattr(self, 'object', None))
+
+    def augment_field(self, field, field_name, key, value):
+        # This horrible stuff is to manage serializers rendering to HTML
+        field._errors = self._errors.get(key) if self._errors else None
+        field._name = field_name
+        field._value = self.init_data.get(key) if self._errors and self.init_data else value
+        if not field.label:
+            field.label = pretty_name(key)
+        return field
 
     def field_to_native(self, obj, field_name):
         """
@@ -518,6 +540,9 @@ class BaseSerializer(WritableField):
         """
         Save the deserialized object and return it.
         """
+        # Clear cached _data, which may be invalidated by `save()`
+        self._data = None
+
         if isinstance(self.object, list):
             [self.save_object(item, **kwargs) for item in self.object]
 

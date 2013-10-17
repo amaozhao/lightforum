@@ -61,6 +61,7 @@ define([
         
         initialize: function () {
             window.currentuser = new SimpleUserModel();
+            window.base_title = $(document).attr('title');
             var id = $('meta[name="id"]').attr('content'),
                 username = $('meta[name="username"]').attr('content'),
                 email = $('meta[name="email"]').attr('content'),
@@ -72,7 +73,8 @@ define([
             }
             window.currentuser.set({
                 id: id, username: username, email: email, 
-                notifications: notifications, avatar: avatar,
+                notifications: notifications, 
+                avatar: avatar,
                 is_authenticated: is_authenticated
             });
             this.topiccollection = new TopicCollection();
@@ -103,6 +105,7 @@ define([
             $(".clearfix").html(this.mainview.render().el);
             var sidebarview = new SideBarView();
             $('#sidebar').html(sidebarview.render().el);
+            document.title = $('.clearfix h3').html().trim() + ' | ' + window.base_title;
         },
 
         contact: function() {
@@ -111,6 +114,7 @@ define([
             $(".clearfix").html(this.mainview.render().el);
             var sidebarview = new SideBarView();
             $('#sidebar').html(sidebarview.render().el);
+            document.title = $('.clearfix h3').html().trim() + ' | ' + window.base_title;
         },
 
         sigin: function() {

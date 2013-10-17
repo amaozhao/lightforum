@@ -17,21 +17,13 @@ class SimpleUserViewset(viewsets.ModelViewSet):
         return self.request.user
     
     def create(self, request, *args, **kwargs):
-        if request.method == "POST":
-            form = AuthenticationForm(data=request.POST)
-            if form.is_valid():
-                auth_login(request, form.get_user())
-    
-                if request.session.test_cookie_worked():
-                    request.session.delete_test_cookie()
-    
-                return self.get(self, request, *args, **kwargs)
-        return Response({'error': "Your username and password didn't match."}, status=status.HTTP_200_OK)
+        return
     
     def put(self, request, *args, **kwargs):
         return
 
 class SimpleAuthorViewset(SimpleUserViewset):
+    serializer_class = UserSerializer
     def get_object(self, queryset=None):
         user = User.objects.get(id = self.kwargs.get('author', None))
         return user

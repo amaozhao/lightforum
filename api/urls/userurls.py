@@ -31,9 +31,7 @@ user_topic = UserTopicViewset.as_view({
 urlpatterns = patterns('',
     url(r'^topic/(?P<id>[0-9]+)$', user_detail, name='user-detail'),
     url(r'^author/(?P<author>[0-9]+)$', simpleauthor_detail, name='author-detail'),
-    # url(r'^(?P<username>\w+)$', user_detail, name='user-detail'),
     url(r'^topic/(?P<id>[0-9]+)/simpletopic$', user_simpletopic, name='user-simple-topic'),
     url(r'^author/(?P<author>[0-9]+)/simpletopic$', author_simpletopic, name='author-simple-topic'),
     url(r'^(?P<id>[0-9]+)/topics$', user_topic, name='user-topic'),
-    url(r'^auth$', simpleuser_detail, name='simpleuser-detail'),
 )

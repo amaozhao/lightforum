@@ -58,6 +58,7 @@ define([
             this.$el.html('');
             this.$el.html(this.template(this.model.toJSON()));
             if(this.options.detail){
+                document.title = this.model.get('title') + ' | ' + window.base_title;
                 this.$el.find('.content').html(this.model.get('markdown'));
                 var commentsize = _.size(this.commentlistview.collection),
                     commentable = this.model.get('commentable');
