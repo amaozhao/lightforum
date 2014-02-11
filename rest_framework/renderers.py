@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 
 import copy
 import json
+import django
 from django import forms
 from django.core.exceptions import ImproperlyConfigured
 from django.http.multipartparser import parse_header
@@ -20,6 +21,7 @@ from rest_framework.compat import StringIO
 from rest_framework.compat import six
 from rest_framework.compat import smart_text
 from rest_framework.compat import yaml
+from rest_framework.exceptions import ParseError
 from rest_framework.settings import api_settings
 from rest_framework.request import is_form_media_type, override_method
 from rest_framework.utils import encoders
@@ -420,8 +422,12 @@ class BrowsableAPIRenderer(BaseRenderer):
         In the absence of the View having an associated form then return None.
         """
         if request.method == method:
-            data = request.DATA
-            files = request.FILES
+            try:
+                data = request.DATA
+                files = request.FILES
+            except ParseError:
+                data = None
+                files = None        
         else:
             data = None
             files = None
@@ -592,7 +598,7 @@ class MultiPartRenderer(BaseRenderer):
     media_type = 'multipart/form-data; boundary=BoUnDaRyStRiNg'
     format = 'multipart'
     charset = 'utf-8'
-    BOUNDARY = 'BoUnDaRyStRiNg'
+    BOUNDARY = 'BoUnDaRyStRiNg' if django.VERSION >= (1, 5) else b'BoUnDaRyStRiNg'
 
     def render(self, data, accepted_media_type=None, renderer_context=None):
         return encode_multipart(self.BOUNDARY, data)

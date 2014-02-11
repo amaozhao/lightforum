@@ -112,12 +112,13 @@ class APIView(View):
 
     @property
     def default_response_headers(self):
-        # TODO: deprecate?
-        # TODO: Only vary by accept if multiple renderers
-        return {
+        headers = {
             'Allow': ', '.join(self.allowed_methods),
-            'Vary': 'Accept'
         }
+        if len(self.renderer_classes) > 1:
+            headers['Vary'] = 'Accept'
+        return headers
+
 
     def http_method_not_allowed(self, request, *args, **kwargs):
         """
@@ -154,8 +155,8 @@ class APIView(View):
         Returns a dict that is passed through to Parser.parse(),
         as the `parser_context` keyword argument.
         """
-        # Note: Additionally `request` will also be added to the context
-        #       by the Request object.
+        # Note: Additionally `request` and `encoding` will also be added
+        #       to the context by the Request object.
         return {
             'view': self,
             'args': getattr(self, 'args', ()),
