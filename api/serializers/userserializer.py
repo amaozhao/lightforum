@@ -1,39 +1,44 @@
 from django.contrib.auth.models import User
-import urllib, hashlib
+import urllib
+import hashlib
 
 from rest_framework import serializers
 from comments.models import Comment
 from friends.models import FriendShip
 
+
 class SimpleUserSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField('get_avatar')
-    is_authenticated = serializers.SerializerMethodField('get_is_authenticated')
+    is_authenticated = serializers.SerializerMethodField(
+        'get_is_authenticated')
     notifications = serializers.SerializerMethodField('get_notifications')
-    
+
     def get_avatar(self, obj):
         default = "http://www.gravatar.com/avatar/"
-        path = "http://www.gravatar.com/avatar/" + hashlib.md5(obj.email.lower()).hexdigest() + "?"
-        path += urllib.urlencode({'d':default, 's':str(50)})
+        path = "http://www.gravatar.com/avatar/" + \
+            hashlib.md5(obj.email.lower()).hexdigest() + "?"
+        path += urllib.urlencode({'d': default, 's': str(50)})
         return path
-    
+
     def get_topiccount(self, obj):
         return obj.topics.count()
-    
+
     def get_notifications(self, obj):
         try:
-            return obj.notifications.filter(unread = True).count()
+            return obj.notifications.filter(unread=True).count()
         except:
             return 0
-    
+
     def get_is_authenticated(self, obj):
         return self.context['view'].request.user.is_authenticated()
-   
+
     class Meta:
         model = User
-        fields = ('id', 'username', 
+        fields = ('id', 'username',
                   'avatar', 'is_authenticated', 'notifications',
-        )
+                  )
         read_only_fields = ('id', 'username', )
+
 
 class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField('get_avatar')
@@ -45,43 +50,53 @@ class UserSerializer(serializers.ModelSerializer):
     is_following = serializers.SerializerMethodField('get_is_following')
     is_followed = serializers.SerializerMethodField('get_is_followed')
     signature = serializers.SerializerMethodField('get_signature')
-    
+
     def get_avatar(self, obj):
         default = "http://www.gravatar.com/avatar/"
-        path = "http://www.gravatar.com/avatar/" + hashlib.md5(obj.email.lower()).hexdigest() + "?"
-        path += urllib.urlencode({'d':default, 's':str(50)})
+        path = "http://www.gravatar.com/avatar/" + \
+            hashlib.md5(obj.email.lower()).hexdigest() + "?"
+        path += urllib.urlencode({'d': default, 's': str(50)})
         return path
-    
+
     def get_topiccount(self, obj):
         return obj.topics.count()
-    
+
     def get_commentcount(self, obj):
-        return Comment.objects.filter(author = obj).count()
-    
+        return Comment.objects.filter(author=obj).count()
+
     def get_gender(self, obj):
         return obj.get_profile().gender
+
     def get_fans(self, obj):
         return obj.to_user.count()
+
     def get_following(self, obj):
         return obj.from_user.count()
+
     def get_is_following(self, obj):
         try:
-            return FriendShip.objects.filter(from_user = self.context['view'].request.user, to_user = obj).exists()
+            return FriendShip.objects.filter(
+                from_user=self.context['view'].request.user,
+                to_user=obj).exists()
         except:
             return False
+
     def get_is_followed(self, obj):
         try:
-            return FriendShip.objects.filter(from_user = obj, to_user = self.context['view'].request.user).exists()
+            return FriendShip.objects.filter(
+                from_user=obj,
+                to_user=self.context['view'].request.user).exists()
         except:
             return False
+
     def get_signature(self, obj):
         return ''
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 
-                  'avatar', 'topiccount', 'commentcount', 'gender', 
+        fields = ('id', 'username', 'email',
+                  'avatar', 'topiccount', 'commentcount', 'gender',
                   'fans', 'following', 'signature',
                   'is_following', 'is_followed'
-        )
+                  )
         read_only_fields = ('id', 'username', 'email', )

@@ -11,6 +11,7 @@ fans_detail = FansViewset.as_view({
 })
 
 urlpatterns = patterns('',
-    url(r'^$', fans_list, name='fans-list'),
-    url(r'^(?P<to_user_id>[0-9]+)$', fans_detail, name='fans-detail'),
-)
+                       url(r'^$', fans_list, name='fans-list'),
+                       url(r'^(?P<to_user_id>[0-9]+)$',
+                           fans_detail, name='fans-detail'),
+                       )

@@ -7,13 +7,14 @@ from .codehilite import CodeHilite, CodeHiliteExtension
 import re
 
 # Global vars
-HIGHTLIGHT_BLOCK_RE = re.compile( \
+HIGHTLIGHT_BLOCK_RE = re.compile(
     r'(?P<fence>^(?:`{3,}))[ ]*(?P<lang>[\w+-]*)[ ]*\n(?P<code>.*?)(?P=fence)[ ]*$',
-    re.MULTILINE|re.DOTALL
-    )
+    re.MULTILINE | re.DOTALL
+)
 
 CODE_WRAP = '<pre><code%s>%s</code></pre>'
 LANG_TAG = ' class="%s"'
+
 
 class FencedCodeExtension(Extension):
 
@@ -22,8 +23,9 @@ class FencedCodeExtension(Extension):
         md.registerExtension(self)
 
         md.preprocessors.add('fenced_code_block',
-                                 HightlightBlockPreprocessor(md),
-                                 ">normalize_whitespace")
+                             HightlightBlockPreprocessor(md),
+                             ">normalize_whitespace")
+
 
 class HightlightBlockPreprocessor(Preprocessor):
 
@@ -54,10 +56,12 @@ class HightlightBlockPreprocessor(Preprocessor):
                     lang = m.group('lang').lower()
                 except:
                     lang = None
-                highliter = CodeHilite(m.group('code'), css_class="highlight", lang=lang)
+                highliter = CodeHilite(
+                    m.group('code'), css_class="highlight", lang=lang)
                 code = highliter.hilite()
                 placeholder = self.markdown.htmlStash.store(code, safe=True)
-                text = '%s\n%s\n%s'% (text[:m.start()], placeholder, text[m.end():])
+                text = '%s\n%s\n%s' % (
+                    text[:m.start()], placeholder, text[m.end():])
             else:
                 break
         return text.split("\n")
@@ -69,6 +73,7 @@ class HightlightBlockPreprocessor(Preprocessor):
         txt = txt.replace('>', '&gt;')
         txt = txt.replace('"', '&quot;')
         return txt
+
 
 def makeExtension(configs=None):
     return FencedCodeExtension(configs=configs)

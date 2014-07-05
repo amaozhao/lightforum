@@ -8,8 +8,9 @@ from django.contrib import admin
 
 from friends.models import FriendShip
 
+
 class FriendShipAdmin(admin.ModelAdmin):
     model = FriendShip
-    
-    
+
+
 admin.site.register(FriendShip, FriendShipAdmin)

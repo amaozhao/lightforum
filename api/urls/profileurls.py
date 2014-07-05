@@ -8,5 +8,5 @@ profile_detail = ProfileViewset.as_view({
 })
 
 urlpatterns = patterns('',
-    url(r'^$', profile_detail, name='profile-detail'),
-)
+                       url(r'^$', profile_detail, name='profile-detail'),
+                       )

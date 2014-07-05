@@ -15,6 +15,8 @@ comment_detail = CommentViewset.as_view({
 })
 
 urlpatterns = patterns('',
-    url(r'^(?P<topic_id>[0-9]+)$', comment_list, name='comment-list'),
-    url(r'^(?P<topic_id>[0-9]+)/(?P<pk>[0-9]+)$', comment_detail, name='comment-detail'),
-)
+                       url(r'^(?P<topic_id>[0-9]+)$',
+                           comment_list, name='comment-list'),
+                       url(r'^(?P<topic_id>[0-9]+)/(?P<pk>[0-9]+)$',
+                           comment_detail, name='comment-detail'),
+                       )

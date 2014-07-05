@@ -9,6 +9,7 @@ from registration.views import RegistrationView as BaseRegistrationView
 
 
 class RegistrationView(BaseRegistrationView):
+
     """
     A registration backend which follows a simple workflow:
 
@@ -45,8 +46,9 @@ class RegistrationView(BaseRegistrationView):
     an instance of ``registration.models.RegistrationProfile``. See
     that model and its custom manager for full documentation of its
     fields and supported operations.
-    
+
     """
+
     def register(self, request, **cleaned_data):
         """
         Given a username, email address and password, register a new
@@ -71,7 +73,8 @@ class RegistrationView(BaseRegistrationView):
         class of this backend as the sender.
 
         """
-        username, email, password = cleaned_data['username'], cleaned_data['email'], cleaned_data['password1']
+        username, email, password = cleaned_data[
+            'username'], cleaned_data['email'], cleaned_data['password1']
         if Site._meta.installed:
             site = Site.objects.get_current()
         else:
@@ -94,7 +97,7 @@ class RegistrationView(BaseRegistrationView):
 
         * If ``REGISTRATION_OPEN`` is both specified and set to
           ``False``, registration is not permitted.
-        
+
         """
         return getattr(settings, 'REGISTRATION_OPEN', True)
 
@@ -102,12 +105,13 @@ class RegistrationView(BaseRegistrationView):
         """
         Return the name of the URL to redirect to after successful
         user registration.
-        
+
         """
         return ('registration_complete', (), {})
 
 
 class ActivationView(BaseActivationView):
+
     def activate(self, request, activation_key):
         """
         Given an an activation key, look up and activate the user
@@ -117,9 +121,10 @@ class ActivationView(BaseActivationView):
         ``registration.signals.user_activated`` will be sent, with the
         newly activated ``User`` as the keyword argument ``user`` and
         the class of this backend as the sender.
-        
+
         """
-        activated_user = RegistrationProfile.objects.activate_user(activation_key)
+        activated_user = RegistrationProfile.objects.activate_user(
+            activation_key)
         if activated_user:
             signals.user_activated.send(sender=self.__class__,
                                         user=activated_user,

@@ -1,10 +1,12 @@
 from django.views.generic.base import TemplateResponseMixin
 
 from rest_framework.viewsets import ModelViewSet
-from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.status import HTTP_400_BAD_REQUEST
+
 
 class BaseView(TemplateResponseMixin, ModelViewSet):
+
     """
     A registration backend which implements the simplest possible
     workflow: a user supplies a username, email address and password

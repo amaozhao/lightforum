@@ -4,5 +4,5 @@ from django.conf.urls import patterns, url
 from friends.views import action
 
 urlpatterns = patterns('',
-    url(r'^action$', action, name='action'),
-)
+                       url(r'^action$', action, name='action'),
+                       )

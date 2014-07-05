@@ -13,6 +13,7 @@ notification_detail = NotificationViewset.as_view({
 })
 
 urlpatterns = patterns('',
-    url(r'^$', notification_list, name='notification-list'),
-    url(r'^(?P<pk>[0-9]+)$', notification_detail, name='notification-detail'),
-)
+                       url(r'^$', notification_list, name='notification-list'),
+                       url(r'^(?P<pk>[0-9]+)$', notification_detail,
+                           name='notification-detail'),
+                       )

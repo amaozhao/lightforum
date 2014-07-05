@@ -13,6 +13,7 @@ from api.serializers.userserializer import SimpleUserSerializer
 
 
 class RegistrationView(BaseView):
+
     """
     A registration backend which implements the simplest possible
     workflow: a user supplies a username, email address and password
@@ -25,7 +26,8 @@ class RegistrationView(BaseView):
     template_name = 'registration/registration_form.html'
 
     def register(self, request, **cleaned_data):
-        username, email, password = cleaned_data['username'], cleaned_data['email'], cleaned_data['password1']
+        username, email, password = cleaned_data[
+            'username'], cleaned_data['email'], cleaned_data['password1']
         user = User.objects.create_user(username, email, password)
 
         new_user = authenticate(username=username, password=password)
@@ -61,7 +63,8 @@ class RegistrationView(BaseView):
         """
         self.object = new_user = self.register(request, **form.cleaned_data)
         context = self.get_serializer_context()
-        serializer = self.get_serializer_class()(instance = new_user, context=context)
+        serializer = self.get_serializer_class()(
+            instance=new_user, context=context)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED,
                         headers=headers)

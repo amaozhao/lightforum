@@ -13,6 +13,7 @@ following_detail = FollowingViewset.as_view({
 })
 
 urlpatterns = patterns('',
-    url(r'^$', following_list, name='following-list'),
-    url(r'^(?P<to_user_id>[0-9]+)$', following_detail, name='following-detail'),
-)
+                       url(r'^$', following_list, name='following-list'),
+                       url(r'^(?P<to_user_id>[0-9]+)$',
+                           following_detail, name='following-detail'),
+                       )

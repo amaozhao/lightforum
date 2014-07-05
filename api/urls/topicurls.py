@@ -19,7 +19,8 @@ topic_detail = TopicViewset.as_view({
 })
 
 urlpatterns = patterns('',
-    url(r'^$', topic_list, name='topic-list'),
-    url(r'^hot$', simple_topic_list, name='hot-topic-list'),
-    url(r'^(?P<pk>[0-9]+)$', topic_detail, name='topic-detail'),
-)
+                       url(r'^$', topic_list, name='topic-list'),
+                       url(r'^hot$', simple_topic_list, name='hot-topic-list'),
+                       url(r'^(?P<pk>[0-9]+)$', topic_detail,
+                           name='topic-detail'),
+                       )

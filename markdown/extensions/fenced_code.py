@@ -13,14 +13,14 @@ This extension adds Fenced Code Blocks to Python-Markdown.
     ... ~~~
     ... '''
     >>> html = markdown.markdown(text, extensions=['fenced_code'])
-    >>> print html
+    >>> print(html)
     <p>A paragraph before a fenced code block:</p>
     <pre><code>Fenced code block
     </code></pre>
 
 Works with safe_mode also (we check this because we are using the HtmlStash):
 
-    >>> print markdown.markdown(text, extensions=['fenced_code'], safe_mode='replace')
+    >>> print(markdown.markdown(text, extensions=['fenced_code'], safe_mode='replace'))
     <p>A paragraph before a fenced code block:</p>
     <pre><code>Fenced code block
     </code></pre>
@@ -32,7 +32,7 @@ Include tilde's in a code block and wrap with blank lines:
     ...
     ... ~~~~
     ... ~~~~~~~~'''
-    >>> print markdown.markdown(text, extensions=['fenced_code'])
+    >>> print(markdown.markdown(text, extensions=['fenced_code']))
     <pre><code>
     ~~~~
     </code></pre>
@@ -43,7 +43,7 @@ Language tags:
     ... ~~~~{.python}
     ... # Some python code
     ... ~~~~'''
-    >>> print markdown.markdown(text, extensions=['fenced_code'])
+    >>> print(markdown.markdown(text, extensions=['fenced_code']))
     <pre><code class="python"># Some python code
     </code></pre>
 
@@ -54,10 +54,24 @@ Optionally backticks instead of tildes as per how github's code block markdown i
     ... # Arbitrary code
     ... ~~~~~ # these tildes will not close the block
     ... `````'''
-    >>> print markdown.markdown(text, extensions=['fenced_code'])
+    >>> print(markdown.markdown(text, extensions=['fenced_code']))
     <pre><code># Arbitrary code
     ~~~~~ # these tildes will not close the block
     </code></pre>
+
+If the codehighlite extension and Pygments are installed, lines can be highlighted:
+
+    >>> text = '''
+    ... ```hl_lines="1 3"
+    ... line 1
+    ... line 2
+    ... line 3
+    ... ```'''
+    >>> print(markdown.markdown(text, extensions=['codehilite', 'fenced_code']))
+    <div class="codehilite"><pre><span class="hll"><span class="n">line</span> <span class="mi">1</span>
+    </span><span class="n">line</span> <span class="mi">2</span>
+    <span class="hll"><span class="n">line</span> <span class="mi">3</span>
+    </span></pre></div>
 
 Copyright 2007-2008 [Waylan Limberg](http://achinghead.com/).
 
@@ -77,7 +91,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from . import Extension
 from ..preprocessors import Preprocessor
-from .codehilite import CodeHilite, CodeHiliteExtension
+from .codehilite import CodeHilite, CodeHiliteExtension, parse_hl_lines
 import re
 
 
@@ -93,10 +107,14 @@ class FencedCodeExtension(Extension):
 
 
 class FencedBlockPreprocessor(Preprocessor):
-    FENCED_BLOCK_RE = re.compile( \
-        r'(?P<fence>^(?:~{3,}|`{3,}))[ ]*(\{?\.?(?P<lang>[a-zA-Z0-9_+-]*)\}?)?[ ]*\n(?P<code>.*?)(?<=\n)(?P=fence)[ ]*$',
-        re.MULTILINE|re.DOTALL
-    )
+    FENCED_BLOCK_RE = re.compile(r'''
+(?P<fence>^(?:~{3,}|`{3,}))[ ]*         # Opening ``` or ~~~
+(\{?\.?(?P<lang>[a-zA-Z0-9_+-]*))?[ ]*  # Optional {, and lang
+# Optional highlight lines, single- or double-quote-delimited
+(hl_lines=(?P<quot>"|')(?P<hl_lines>.*?)(?P=quot))?[ ]*
+}?[ ]*\n                                # Optional closing }
+(?P<code>.*?)(?<=\n)
+(?P=fence)[ ]*$''', re.MULTILINE | re.DOTALL | re.VERBOSE)
     CODE_WRAP = '<pre><code%s>%s</code></pre>'
     LANG_TAG = ' class="%s"'
 
@@ -127,7 +145,7 @@ class FencedBlockPreprocessor(Preprocessor):
                     lang = self.LANG_TAG % m.group('lang')
 
                 # If config is not empty, then the codehighlite extension
-                # is enabled, so we call it to highlite the code
+                # is enabled, so we call it to highlight the code
                 if self.codehilite_conf:
                     highliter = CodeHilite(m.group('code'),
                             linenums=self.codehilite_conf['linenums'][0],
@@ -135,7 +153,8 @@ class FencedBlockPreprocessor(Preprocessor):
                             css_class=self.codehilite_conf['css_class'][0],
                             style=self.codehilite_conf['pygments_style'][0],
                             lang=(m.group('lang') or None),
-                            noclasses=self.codehilite_conf['noclasses'][0])
+                            noclasses=self.codehilite_conf['noclasses'][0],
+                            hl_lines=parse_hl_lines(m.group('hl_lines')))
 
                     code = highliter.hilite()
                 else:

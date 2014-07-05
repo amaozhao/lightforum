@@ -4,13 +4,16 @@ from rest_framework import serializers
 
 from notify.models import Notification
 
+
 class MemberSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = ('username', 'id')
 
+
 class NotificationSerializer(serializers.ModelSerializer):
-    owner = serializers.RelatedField(read_only = True)
+    owner = serializers.RelatedField(read_only=True)
     member = MemberSerializer(many=True)
     topic_id = serializers.SerializerMethodField('get_topic_id')
     topic_title = serializers.SerializerMethodField('get_topic_title')
@@ -21,19 +24,20 @@ class NotificationSerializer(serializers.ModelSerializer):
             return obj.topic.id
         except:
             return ''
-        
+
     def get_topic_title(self, obj):
         try:
             return obj.topic.title
         except:
             return ''
-    
+
     def get_member_count(self, obj):
         try:
             return obj.member.count()
         except:
             return 0
-    
+
     class Meta:
         model = Notification
-        fields = ('id', 'owner', 'member', 'topic_id', 'member_count', 'topic_title' )
+        fields = (
+            'id', 'owner', 'member', 'topic_id', 'member_count', 'topic_title')
